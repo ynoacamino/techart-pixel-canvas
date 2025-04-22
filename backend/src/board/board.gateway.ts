@@ -22,7 +22,7 @@ export class BoardGateway implements OnGatewayConnection {
 
   handleConnection(client: Socket) {
     console.log('Cliente conectado:', client.id);
-    client.emit('board_init', this.boardService.getBoard());
+    // client.emit('board_init', this.boardService.getBoard());
   }
 
   @SubscribeMessage('cell_clicked')

@@ -3,7 +3,7 @@ import { Board } from './dto/cell.dto';
 
 @Injectable()
 export class BoardService {
-  private readonly size = 10;
+  private readonly size = 100;
 
   private board: Board;
 
