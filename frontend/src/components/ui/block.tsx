@@ -5,8 +5,7 @@ import { useEffect, useState } from 'react';
 
 interface BlockProps {
   size?: 'sm' | 'md' | 'lg';
-  color?: 'blue' | 'red' | 'green' | 'yellow' | 'purple' | 'pink';
-  initialOpacity?: number;
+  color?: 'blue' | 'red' | 'green' | 'yellow' | 'purple' | 'pink' | 'transparent';
 }
 
 const sizeClasses = {
@@ -22,14 +21,14 @@ const colorClasses = {
   yellow: 'bg-yellow-500',
   purple: 'bg-purple-500',
   pink: 'bg-pink-500',
+  transparent: 'bg-transparent',
 };
 
 function Block({
   size = 'md',
-  color = 'blue',
-  initialOpacity = 0.5,
+  color = 'transparent',
 }: BlockProps) {
-  const [opacity, setOpacity] = useState(initialOpacity);
+  const [opacity, setOpacity] = useState<number>(0);
   useEffect(() => {
     const interval = setInterval(() => {
       setOpacity((prev) => {
@@ -40,6 +39,9 @@ function Block({
       });
     }, 2000);
     return () => clearInterval(interval);
+  }, []);
+  useEffect(() => {
+    setOpacity(Math.random() * 0.5 + 0.5);
   }, []);
   return (
     <div

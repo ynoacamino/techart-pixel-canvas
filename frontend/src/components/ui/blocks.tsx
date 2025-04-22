@@ -1,9 +1,13 @@
-import { cn } from '@/lib/utils';
+'use client';
+
+import { cn, generateRandomMap } from '@/lib/utils';
+import { useEffect, useState } from 'react';
 import { Block, BlockProps } from './block';
 
 interface BlocksProps extends BlockProps {
   cols: number;
   rows: number;
+  ratio?: number;
   className?: string;
 }
 
@@ -12,8 +16,14 @@ function Blocks({
   cols,
   rows,
   color = 'blue',
+  ratio = 3,
   className,
 }: BlocksProps) {
+  const [blocksMap, setBlocksMap] = useState<boolean[]>(new Array(cols * rows).fill(false));
+
+  useEffect(() => {
+    setBlocksMap(generateRandomMap(cols * rows, Math.ceil((cols * rows) / ratio)));
+  }, [cols, rows, ratio]);
   return (
     <div
       className={cn(
@@ -25,12 +35,11 @@ function Blocks({
         gridTemplateRows: `repeat(${rows}, 1fr)`,
       }}
     >
-      {Array.from({ length: cols * rows }, (_, index) => (
+      {blocksMap.map((drawHere, index) => (
         <Block
           key={index}
           size={size}
-          color={color}
-          initialOpacity={Math.random()}
+          color={drawHere ? color : 'transparent'}
         />
       ))}
     </div>
