@@ -1,3 +1,4 @@
+import { Blocks } from '@/components/ui/blocks';
 import { Button } from '@/components/ui/button';
 
 export default function Hero() {
@@ -9,6 +10,7 @@ export default function Hero() {
       <Button size="lg" className="text-xl animate-bounce">
         ¡Pintemos!
       </Button>
+      <Blocks cols={7} rows={3} />
     </div>
   );
 }
