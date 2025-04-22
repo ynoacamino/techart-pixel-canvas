@@ -11,6 +11,8 @@ async function bootstrap() {
     allowedHeaders: '*',
   })
 
-  await app.listen(process.env.PORT ?? 8080);
+  const configService: ConfigService = app.get(ConfigService);
+  const apiPort = configService.get<number>('port') ?? 8080;
+  await app.listen(apiPort);
 }
 bootstrap();
