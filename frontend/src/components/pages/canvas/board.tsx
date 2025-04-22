@@ -15,9 +15,9 @@ export default function Board() {
         board.map((row, i) => (
           <div className="grid grid-cols-100 w-full" key={i}>
             {row.map((color, j) => (
-              <div
+              <button
                 key={`${i}-${j}`}
-                // type="button"
+                type="button"
                 className="aspect-square"
                 style={{ backgroundColor: color }}
                 onClick={() => changeColor({ x: j, y: i, color: currentColor })}
@@ -26,7 +26,7 @@ export default function Board() {
                   {i}
                   {j}
                 </span>
-              </div>
+              </button>
             ))}
           </div>
         ))
