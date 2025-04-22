@@ -30,6 +30,10 @@ function Block({
 }: BlockProps) {
   const [opacity, setOpacity] = useState<number>(0);
   useEffect(() => {
+    if (color === 'transparent') {
+      return () => {};
+    }
+    setOpacity(Math.random() * 0.5 + 0.5);
     const interval = setInterval(() => {
       setOpacity((prev) => {
         if (prev >= 1) {
@@ -37,16 +41,13 @@ function Block({
         }
         return prev + 0.1;
       });
-    }, 2000);
+    }, 1500);
     return () => clearInterval(interval);
-  }, []);
-  useEffect(() => {
-    setOpacity(Math.random() * 0.5 + 0.5);
-  }, []);
+  }, [color]);
   return (
     <div
       className={cn(
-        'rounded-md transition-opacity',
+        'rounded-md transition-all',
         sizeClasses[size],
         colorClasses[color],
       )}
