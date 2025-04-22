@@ -1,14 +1,16 @@
-'use client';
+import Auth from '@/components/auth/Auth';
+import Hero from '@/components/pages/home/Hero';
 
-import Board from '@/components/pages/canvas/board';
-import Zoom from '@/components/ui/zoom';
+const user = {
+  name: 'John Doe',
+  email: 'example@example.com',
+};
 
 export default function Home() {
   return (
-    <Zoom>
-      <div className="w-screen h-screen bg-zinc-300 flex items-center justify-center">
-        <Board />
-      </div>
-    </Zoom>
+    <div className="min-h-screen w-full flex flex-col gap-y-4 items-center justify-center">
+      <Hero />
+      <Auth user={user} />
+    </div>
   );
 }
