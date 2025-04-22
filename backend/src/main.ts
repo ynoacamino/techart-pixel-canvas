@@ -10,8 +10,9 @@ async function bootstrap() {
     methods: '*',
     allowedHeaders: '*',
   })
+
   const configService: ConfigService = app.get(ConfigService);
-  const port = configService.get<number>('port') || 8000;
-  await app.listen(port);
+  const apiPort = configService.get<number>('port') ?? 8080;
+  await app.listen(apiPort);
 }
 bootstrap();
