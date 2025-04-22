@@ -5,13 +5,16 @@ import { ConfigModule } from '@nestjs/config';
 import configuration from './config/configuration';
 import { BoardModule } from './board/board.module';
 import { PrismaModule } from './prisma/prisma.module';
+import { ConfigModule } from '@nestjs/config';
+import configuration from './config/configuration';
 
 @Module({
   imports: [
+    BoardModule,
+    PrismaModule,
     ConfigModule.forRoot({
       load: [configuration]
     }),
-    BoardModule, PrismaModule
   ],
   controllers: [AppController],
   providers: [AppService],
