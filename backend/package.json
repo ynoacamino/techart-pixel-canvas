@@ -31,6 +31,7 @@
     "@nestjs/platform-socket.io": "^11.0.20",
     "@nestjs/websockets": "^11.0.20",
     "@prisma/client": "6.6.0",
+    "@types/passport-google-oauth": "^1.0.45",
     "class-validator": "^0.14.1",
     "passport": "^0.7.0",
     "passport-google-oauth": "^2.0.0",
