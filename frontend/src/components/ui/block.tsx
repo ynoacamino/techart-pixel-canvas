@@ -3,16 +3,11 @@
 import { cn } from '@/lib/utils';
 import { useEffect, useState } from 'react';
 
-interface BlockProps {
-  size?: 'sm' | 'md' | 'lg';
-  color?: 'blue' | 'red' | 'green' | 'yellow' | 'purple' | 'pink' | 'transparent';
-}
-
 const sizeClasses = {
   sm: 'size-4',
   md: 'size-6',
   lg: 'size-8',
-};
+} as const;
 
 const colorClasses = {
   blue: 'bg-blue-500',
@@ -21,8 +16,15 @@ const colorClasses = {
   yellow: 'bg-yellow-500',
   purple: 'bg-purple-500',
   pink: 'bg-pink-500',
+  orange: 'bg-orange-500',
+  cyan: 'bg-cyan-500',
   transparent: 'bg-transparent',
 };
+
+interface BlockProps {
+  size?: keyof typeof sizeClasses;
+  color?: keyof typeof colorClasses;
+}
 
 function Block({
   size = 'md',
@@ -33,21 +35,21 @@ function Block({
     if (color === 'transparent') {
       return () => {};
     }
-    setOpacity(Math.random() * 0.5 + 0.5);
+    setOpacity(Math.random());
     const interval = setInterval(() => {
       setOpacity((prev) => {
         if (prev >= 1) {
-          return 0.5;
+          return 0;
         }
-        return prev + 0.1;
+        return prev + 0.2;
       });
-    }, 1500);
+    }, 2000);
     return () => clearInterval(interval);
   }, [color]);
   return (
     <div
       className={cn(
-        'rounded-md transition-all',
+        'rounded-md transition-opacity duration-500',
         sizeClasses[size],
         colorClasses[color],
       )}
