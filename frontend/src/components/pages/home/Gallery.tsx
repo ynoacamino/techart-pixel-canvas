@@ -31,7 +31,7 @@ export default function Gallery({
   return (
     <div
       className={cn(
-        'hidden lg:flex absolute w-1/5 h-max flex-col gap-y-2 py-2 top-0',
+        'hidden lg:flex absolute w-1/5 h-max flex-col gap-y-2 py-2 top-0 overflow-hidden',
         side === 'left' ? 'left-2' : 'right-2',
       )}
     >
