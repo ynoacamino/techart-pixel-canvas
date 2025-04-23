@@ -1,6 +1,7 @@
 import ModalSignIn from '@/components/auth/ModalSignIn';
 import { Blocks } from '@/components/ui/blocks';
 import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 
 interface HeroProps {
   user?: {
@@ -16,12 +17,14 @@ export default function Hero({
   return (
     <div className="flex-1 basis-md flex flex-col gap-y-10 items-center justify-center relative">
       <h1 className="text-5xl font-bold text-center uppercase">
-        Teach Art
+        Tech Art
       </h1>
       {
         user ? (
-          <Button size="lg" className="text-xl animate-bounce">
-            ¡Pintemos!
+          <Button size="lg" className="text-xl animate-bounce" asChild>
+            <Link href="/board">
+              ¡Pintemos!
+            </Link>
           </Button>
         ) : (
           <ModalSignIn>
@@ -41,8 +44,8 @@ export default function Hero({
         <Blocks cols={5} rows={2} ratio={1.5} color="red" />
         <Blocks cols={5} rows={2} ratio={1.5} color="yellow" />
       </div>
-      <Blocks cols={2} rows={7} ratio={1.5} color="cyan" className="absolute right-0 translate-x-36" />
-      <Blocks cols={2} rows={7} ratio={1.5} color="orange" className="absolute left-0 -translate-x-36" />
+      <Blocks cols={2} rows={7} ratio={1.5} color="cyan" className="absolute right-0 translate-x-38" />
+      <Blocks cols={2} rows={7} ratio={1.5} color="orange" className="absolute left-0 -translate-x-38" />
     </div>
   );
 }
