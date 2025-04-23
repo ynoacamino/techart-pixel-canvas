@@ -8,7 +8,7 @@ const user = {
 
 export default function Home() {
   return (
-    <div className="min-h-screen w-full flex flex-col gap-y-4 items-center justify-center">
+    <div className="min-h-screen w-full flex flex-col gap-y-6 py-6 items-center justify-center">
       <Hero />
       <Auth user={user} />
     </div>
