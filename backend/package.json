@@ -31,10 +31,10 @@
     "@nestjs/platform-socket.io": "^11.0.20",
     "@nestjs/websockets": "^11.0.20",
     "@prisma/client": "6.6.0",
-    "@types/passport-google-oauth": "^1.0.45",
+    "@types/passport-google-oauth20": "^2.0.16",
     "class-validator": "^0.14.1",
     "passport": "^0.7.0",
-    "passport-google-oauth": "^2.0.0",
+    "passport-google-oauth20": "^2.0.0",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1",
     "socket.io": "^4.8.1"
