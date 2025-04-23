@@ -1,7 +1,7 @@
 'use client';
 
-import { useEffect, useState } from "react";
-import { motion, useAnimate, useInView } from "motion/react";
+import { useEffect, useState } from 'react';
+import { motion } from 'motion/react';
 
 interface GalleryProps {
   images?: string[];
@@ -31,7 +31,6 @@ const templates = [
 export default function MasonryGallery({
   images,
 }: GalleryProps) {
-  const controls = useAnimate();
   const [, setMasonryLoading] = useState(true);
   useEffect(() => {
     import('@appnest/masonry-layout').then(() => {
@@ -39,7 +38,7 @@ export default function MasonryGallery({
     });
   }, []);
   return (
-    <masonry-layout maxcolwidth="200" gap="8" className="flex md:hidden px-2">
+    <masonry-layout maxcolwidth="200" gap="8" className="flex md:hidden px-2 mt-15">
       {
         images
           ? (images.map((image, index) => (
