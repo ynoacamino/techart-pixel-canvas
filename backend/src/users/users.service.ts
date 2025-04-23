@@ -4,6 +4,8 @@ import { PrismaService } from 'src/prisma/prisma.service';
 export type User = {
   id: number;
   email: string;
+  name: string;
+  avatar: string;
   cellsAvailable: number;
   lastGivenAt: Date;
 }
@@ -19,9 +21,11 @@ export class UsersService {
     });
   }
 
-  async createUser(data: { email: string }): Promise<User> {
+  async createUser(data: { email: string, name: string, avatar: string }): Promise<User> {
     return this.prisma.user.create({
       data: {
+        name: data.name,
+        avatar: data.avatar,
         email: data.email,
         cellsAvailable: 10,
         lastGivenAt: new Date()
@@ -29,7 +33,12 @@ export class UsersService {
     });
   }
 
-  async updateUser(id: number, data: { cellsAvailable: number, lastGivenAt: Date }): Promise<User> {
+  async updateUser(id: number, data: {
+    cellsAvailable?: number,
+    lastGivenAt?: Date
+    name?: string,
+    avatar?: string
+  }): Promise<User> {
     return this.prisma.user.update({
       where: { id },
       data: {
