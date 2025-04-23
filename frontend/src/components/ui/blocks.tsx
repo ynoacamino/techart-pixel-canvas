@@ -16,7 +16,7 @@ function Blocks({
   cols,
   rows,
   color = 'blue',
-  ratio = 3,
+  ratio = 1,
   className,
 }: BlocksProps) {
   const [blocksMap, setBlocksMap] = useState<boolean[]>(new Array(cols * rows).fill(false));
