@@ -1,3 +1,5 @@
+'use client';
+
 import { cn } from '@/lib/utils';
 
 interface GalleryProps {
@@ -29,7 +31,7 @@ export default function Gallery({
   return (
     <div
       className={cn(
-        'fixed w-1/5 h-max flex flex-col gap-y-2 top-2',
+        'absolute w-1/5 h-max flex flex-col gap-y-2 py-2 top-0',
         side === 'left' ? 'left-2' : 'right-2',
       )}
     >
