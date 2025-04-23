@@ -5,10 +5,10 @@ import { User, UsersService } from 'src/users/users.service';
 export class AuthService {
   constructor(private usersService: UsersService) { }
   
-  async validateUser(email: string): Promise<User> {
+  async validateUser({ email, name, avatar }): Promise<User> {
     let user = await this.usersService.findByEmail(email);
     if (!user) {
-      user = await this.usersService.createUser({ email });
+      user = await this.usersService.createUser({ email, name, avatar });
     }
     return user;
   }
