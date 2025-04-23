@@ -7,7 +7,6 @@ const user = {
   email: 'example@example.com',
 };
 
-
 export default function Home() {
   return (
     <>
