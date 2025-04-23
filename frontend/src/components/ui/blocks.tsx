@@ -22,7 +22,7 @@ function Blocks({
   const [blocksMap, setBlocksMap] = useState<boolean[]>(new Array(cols * rows).fill(false));
 
   useEffect(() => {
-    setBlocksMap(generateRandomMap(cols * rows, Math.ceil((cols * rows) / ratio)));
+    setBlocksMap(generateRandomMap(cols * rows, Math.ceil((cols * rows) / ratio) % (cols * rows)));
   }, [cols, rows, ratio]);
   return (
     <div
