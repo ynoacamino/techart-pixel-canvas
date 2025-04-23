@@ -1,18 +1,22 @@
-'use client';
+import Auth from '@/components/auth/Auth';
+import Gallery from '@/components/pages/home/Gallery';
+import Hero from '@/components/pages/home/Hero';
 
-import Board from '@/components/pages/canvas/board';
-import ColorPicker from '@/components/pages/canvas/colorPicker';
-import Zoom from '@/components/ui/zoom';
+const user = {
+  name: 'John Doe',
+  email: 'example@example.com',
+};
+
 
 export default function Home() {
   return (
     <>
-      <Zoom>
-        <div className="w-screen h-screen bg-zinc-300 flex items-center justify-center">
-          <Board />
-        </div>
-      </Zoom>
-      <ColorPicker />
+      <div className="fixed top-0 w-full flex flex-col gap-y-6 py-6 items-center justify-center">
+        <Hero />
+        <Auth user={user} />
+      </div>
+      <Gallery side="left" />
+      <Gallery side="right" />
     </>
   );
 }
