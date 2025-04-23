@@ -3,7 +3,7 @@
 import { cn } from '@/lib/utils';
 
 interface GalleryProps {
-  side: 'left' | 'right';
+  side: 'left' | 'right' | 'bottom';
   images?: string[];
 }
 
@@ -31,7 +31,7 @@ export default function Gallery({
   return (
     <div
       className={cn(
-        'absolute w-1/5 h-max flex flex-col gap-y-2 py-2 top-0',
+        'hidden md:flex absolute w-1/5 h-max flex-col gap-y-2 py-2 top-0',
         side === 'left' ? 'left-2' : 'right-2',
       )}
     >
@@ -45,7 +45,7 @@ export default function Gallery({
                 alt="Elemento de galería"
                 className={cn(
                   'rounded-md object-cover',
-                  side === 'left' ? 'animate-slide-right' : 'animate-slide-right',
+                  side === 'left' ? 'animate-slide-left' : 'animate-slide-right',
                 )}
                 style={{
                   animationDelay: `${index * 0.1}s`,

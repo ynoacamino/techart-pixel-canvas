@@ -13,11 +13,11 @@ export default function Auth({
   user,
 }: AuthProps) {
   return (
-    <div className="flex flex-col gap-y-4 items-center animate-slide-up">
+    <div className="flex flex-col gap-y-4 items-center animate-slide-up w-full">
       <p>
         {user ? '¡Bienvenido de nuevo!' : 'Inicia sesión para pintar'}
       </p>
-      <div className="flex gap-x-20 items-center">
+      <div className="flex flex-col md:flex-row items-center gap-x-20 gap-y-4">
         {
           user && (
             <div className="flex gap-x-3 items-center">
