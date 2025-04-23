@@ -45,7 +45,11 @@ export default function Auth({
               Cerrar sesión
             </Button>
           ) : (
-            <ModalSignIn />
+            <ModalSignIn>
+              <Button size="sm">
+                Iniciar sesión
+              </Button>
+            </ModalSignIn>
           )
         }
       </div>

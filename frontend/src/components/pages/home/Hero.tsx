@@ -1,15 +1,36 @@
+import ModalSignIn from '@/components/auth/ModalSignIn';
 import { Blocks } from '@/components/ui/blocks';
 import { Button } from '@/components/ui/button';
 
-export default function Hero() {
+interface HeroProps {
+  user?: {
+    name: string;
+    email: string;
+    img?: string;
+  }
+}
+
+export default function Hero({
+  user,
+}: HeroProps) {
   return (
     <div className="flex-1 basis-md flex flex-col gap-y-10 items-center justify-center relative">
       <h1 className="text-5xl font-bold text-center uppercase">
         Teach Art
       </h1>
-      <Button size="lg" className="text-xl animate-bounce">
-        ¡Pintemos!
-      </Button>
+      {
+        user ? (
+          <Button size="lg" className="text-xl animate-bounce">
+            ¡Pintemos!
+          </Button>
+        ) : (
+          <ModalSignIn>
+            <Button size="lg" className="text-xl animate-bounce">
+              ¡Pintemos!
+            </Button>
+          </ModalSignIn>
+        )
+      }
       <div className="flex gap-0.5 absolute bottom-1/2 translate-y-44">
         <Blocks cols={5} rows={2} ratio={1.5} color="blue" />
         <Blocks cols={5} rows={2} ratio={1.5} color="green" />
