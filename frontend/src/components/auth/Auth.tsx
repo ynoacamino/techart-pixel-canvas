@@ -1,4 +1,5 @@
 import { Button } from '@/components/ui/button';
+import ModalSignIn from './ModalSignIn';
 
 interface AuthProps {
   user?: {
@@ -12,7 +13,7 @@ export default function Auth({
   user,
 }: AuthProps) {
   return (
-    <div className="flex flex-col gap-y-4 items-center">
+    <div className="flex flex-col gap-y-4 items-center animate-slide-up">
       <p>
         {user ? '¡Bienvenido de nuevo!' : 'Inicia sesión para pintar'}
       </p>
@@ -38,9 +39,19 @@ export default function Auth({
             </div>
           )
         }
-        <Button size="sm">
-          {user ? 'Cerrar Sesión' : 'Iniciar Sesión'}
-        </Button>
+        {
+          user ? (
+            <Button size="sm">
+              Cerrar sesión
+            </Button>
+          ) : (
+            <ModalSignIn>
+              <Button size="sm">
+                Iniciar sesión
+              </Button>
+            </ModalSignIn>
+          )
+        }
       </div>
     </div>
   );
