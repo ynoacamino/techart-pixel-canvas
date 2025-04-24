@@ -5,6 +5,7 @@ import { Blocks } from '@/components/ui/blocks';
 import { Button } from '@/components/ui/button';
 import { useMediaQuery } from 'react-responsive';
 import Link from 'next/link';
+import { BACKEND_URL } from '@/config/variables';
 
 interface HeroProps {
   user?: {
@@ -32,8 +33,10 @@ export default function Hero({
           </Button>
         ) : (
           <ModalSignIn>
-            <Button size="lg" className="text-xl animate-bounce">
-              ¡Pintemos!
+            <Button size="lg" className="text-xl animate-bounce" asChild>
+              <Link href={`${BACKEND_URL}/auth/google/login`}>
+                ¡Pintemos!
+              </Link>
             </Button>
           </ModalSignIn>
         )
