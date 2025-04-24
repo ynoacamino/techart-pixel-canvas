@@ -17,4 +17,18 @@ model User {
   avatar         String
   cellsAvailable Int
   lastGivenAt    DateTime
+  sessions       Session[]
+}
+
+model Session {
+  id             String   @id @default(uuid()) // refresh token
+  userId         Int 
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken    String   @unique
+  userAgent      String?
+  ipAddress      String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  expiresAt      DateTime
+  revoked        Boolean  @default(false)
 }
