@@ -21,14 +21,11 @@ model User {
 }
 
 model Session {
-  id             String   @id @default(uuid()) // refresh token
+  id             String   @id @default(cuid())
   userId         Int 
   user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  accessToken    String   @unique
+  sessionToken   String   @unique
   userAgent      String?
   ipAddress      String?
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
   expiresAt      DateTime
-  revoked        Boolean  @default(false)
 }
