@@ -17,7 +17,7 @@ export class AuthController {
 
   @Get('me')
   async me(@Req() req: Request, @Res() res: Response) {
-    const sessionToken = req.cookies['session_token'];
+    const sessionToken = req.cookies?.['session_token'];
     if (!sessionToken) {
       return res.status(401).json({ message: 'Not authenticated' });
     }
@@ -29,12 +29,27 @@ export class AuthController {
   }
 
   @Get('google/login')
+  async checkSession(@Req() req: Request, @Res() res: Response) {
+    console.log(req);
+    const sessionToken = req.cookies?.['session_token'];
+    if (!sessionToken) {
+      return res.redirect('/auth/google/redirect');
+    }
+    const user = await this.sessionsService.getUserBySessionToken(sessionToken);
+    if (!user) {
+      return res.redirect('/auth/google/redirect');;
+    }
+    return res.redirect('/auth/me');
+  }
+  
+  @Get('google/redirect')
   @UseGuards(AuthGuard('google'))
-  async googleAuth() { }
+  async googleLogin() {} 
+    
 
   @Get('google/logout')
   async googleLogout(@Req() req: Request, @Res() res: Response) {
-    const sessionToken = req.cookies['session_token'];
+    const sessionToken = req.cookies?.['session_token'];
     if (sessionToken) {
       const session = await this.sessionsService.getSessionByToken(sessionToken);
       if (session) {
@@ -42,7 +57,7 @@ export class AuthController {
         res.clearCookie('session_token');
       }
     }
-    res.redirect(this.configService.get<string>('frontendUrl') || 'http://localhost:3000');
+    return res.redirect(this.configService.get<string>('frontendUrl') || 'http://localhost:3000');
   }
 
   @Get('google/callback')
@@ -53,7 +68,7 @@ export class AuthController {
       throw new Error('No user found');
     }
     const user = await this.authService.validateUser(userInReq as User);
-    const sessionToken = req.cookies['session_token'];
+    const sessionToken = req.cookies?.['session_token'];
 
     let session: Session;
     if (sessionToken) {
@@ -82,6 +97,6 @@ export class AuthController {
       maxAge: addDays(new Date(), 7).getTime() - new Date().getTime(),
     });
 
-    res.redirect(this.configService.get<string>('frontendUrl') || 'http://localhost:3000');
+    return res.redirect(this.configService.get<string>('frontendUrl') || 'http://localhost:3000');
   }
 }
