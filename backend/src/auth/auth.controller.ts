@@ -39,7 +39,7 @@ export class AuthController {
     if (!user) {
       return res.redirect('/auth/google/redirect');;
     }
-    return res.redirect('/auth/me');
+    return res.redirect(this.configService.get<string>('frontendUrl') || 'http://localhost:3000');
   }
   
   @Get('google/redirect')
