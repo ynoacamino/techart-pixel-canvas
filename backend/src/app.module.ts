@@ -9,6 +9,7 @@ import { UsersModule } from './users/users.module';
 import { SessionsService } from './sessions/sessions.service';
 import { SessionsModule } from './sessions/sessions.module';
 import configuration from './config/configuration';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import configuration from './config/configuration';
     AuthModule,
     UsersModule,
     SessionsModule,
+    ScheduleModule.forRoot(),
   ],
   controllers: [AppController],
   providers: [AppService],
