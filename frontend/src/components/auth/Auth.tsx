@@ -1,11 +1,31 @@
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { BACKEND_URL } from '@/config/variables';
+import { useEffect, useRef } from 'react';
+import { toast } from 'sonner';
 import ModalSignIn from './ModalSignIn';
 import { useAuth } from '../contexts/AuthProvider';
 
 export default function Auth() {
   const { user, isLoading } = useAuth();
+  const triggerModalRef = useRef<HTMLButtonElement>(null);
+  useEffect(() => {
+    if (triggerModalRef.current) {
+      const isRedirectToLogin = localStorage.getItem('isRedirectToLogin');
+      if (isRedirectToLogin) {
+        localStorage.removeItem('isRedirectToLogin');
+        triggerModalRef.current.click();
+      }
+    }
+  }, [triggerModalRef]);
+
+  useEffect(() => {
+    const isNotAdmin = localStorage.getItem('isNotAdmin');
+    if (isNotAdmin) {
+      localStorage.removeItem('isNotAdmin');
+      toast.error('No tienes permisos para acceder a esta página');
+    }
+  }, []);
   return (
     !isLoading && (
       <div className="flex flex-col gap-y-4 items-center animate-slide-up w-full">
@@ -33,18 +53,29 @@ export default function Auth() {
                     <p className="text-sm font-light text-gray-700">{user.email}</p>
                   </div>
                 </div>
-                <Button size="sm" asChild>
-                  <Link href={`${BACKEND_URL}/auth/google/logout`}>
-                    Cerrar sesión
-                  </Link>
-                </Button>
+                <div className="flex flex-col gap-2">
+                  {
+                    user.role === 'admin' && (
+                      <Button size="sm" asChild>
+                        <Link href="/admin">
+                          Administrar tablero
+                        </Link>
+                      </Button>
+                    )
+                  }
+                  <Button size="sm" asChild>
+                    <Link href={`${BACKEND_URL}/auth/google/logout`}>
+                      Cerrar sesión
+                    </Link>
+                  </Button>
+                </div>
               </>
             )
           }
           {
             !user && (
               <ModalSignIn>
-                <Button size="sm">
+                <Button size="sm" ref={triggerModalRef}>
                   Iniciar sesión
                 </Button>
               </ModalSignIn>

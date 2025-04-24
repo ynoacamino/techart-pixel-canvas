@@ -10,22 +10,33 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Role {
+  auth
+  admin
+}
+
 model User {
-  id             Int      @id @default(autoincrement())
-  email          String   @unique
+  id             Int       @id @default(autoincrement())
+  email          String    @unique
   name           String
   avatar         String
+  role           Role      @default(auth)
   cellsAvailable Int
   lastGivenAt    DateTime
   sessions       Session[]
 }
 
 model Session {
-  id             String   @id @default(cuid())
-  userId         Int 
-  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  sessionToken   String   @unique
-  userAgent      String?
-  ipAddress      String?
-  expiresAt      DateTime
+  id           String   @id @default(cuid())
+  userId       Int
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  sessionToken String   @unique
+  userAgent    String?
+  ipAddress    String?
+  expiresAt    DateTime
+}
+
+model AdminEmail {
+  id    Int    @id @default(autoincrement())
+  email String @unique
 }

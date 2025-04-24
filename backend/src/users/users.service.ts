@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { User } from '@prisma/client';
+import { Role, User } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
@@ -14,10 +14,14 @@ export class UsersService {
   }
 
   async createUser(data: { email: string, name: string, avatar: string }): Promise<User> {
+    const isAdmin = await this.prisma.adminEmail.findUnique({
+      where: { email: data.email }
+    });
     return this.prisma.user.create({
       data: {
         name: data.name,
         avatar: data.avatar,
+        role: isAdmin ? Role.admin : Role.auth,
         email: data.email,
         cellsAvailable: 10,
         lastGivenAt: new Date()
@@ -35,7 +39,9 @@ export class UsersService {
       where: { id },
       data: {
         cellsAvailable: data.cellsAvailable,
-        lastGivenAt: data.lastGivenAt
+        lastGivenAt: data.lastGivenAt,
+        name: data.name,
+        avatar: data.avatar,
       }
     });
   }
