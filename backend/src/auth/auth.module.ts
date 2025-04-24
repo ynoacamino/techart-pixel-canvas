@@ -6,9 +6,15 @@ import { PassportModule } from '@nestjs/passport';
 import { GoogleStrategy } from './google.strategy';
 import { ConfigModule } from '@nestjs/config';
 import configuration from 'src/config/configuration';
+import { SessionsModule } from 'src/sessions/sessions.module';
 
 @Module({
-  imports: [UsersModule, PassportModule, ConfigModule.forRoot({ load: [configuration] })],
+  imports: [
+    UsersModule,
+    PassportModule,
+    ConfigModule.forRoot({ load: [configuration] }),
+    SessionsModule
+  ],
   providers: [AuthService, GoogleStrategy],
   controllers: [AuthController]
 })
