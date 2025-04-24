@@ -18,10 +18,9 @@ export class SessionsService {
     });
   }
   
-  async getSessionByToken(sessionToken: string, withUser = false) {
+  async getSessionByToken(sessionToken: string) {
     const session = await this.prisma.session.findUnique({
       where: { sessionToken },
-      include: withUser ? { user: true } : undefined,
     });
   
     if (!session || session.expiresAt < new Date()) {
@@ -32,7 +31,16 @@ export class SessionsService {
     }
   
     return session;
-  }  
+  }
+
+  async getUserBySessionToken(sessionToken: string) {
+    const session = await this.prisma.session.findUnique({
+      where: { sessionToken },
+      include: { user: true },
+    });
+    return session?.user;
+  }
+
 
   async revokeSession(sessionId: string) {
     return this.prisma.session.delete({
