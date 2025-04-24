@@ -5,35 +5,30 @@ import { Blocks } from '@/components/ui/blocks';
 import { Button } from '@/components/ui/button';
 import { useMediaQuery } from 'react-responsive';
 import Link from 'next/link';
-import { BACKEND_URL } from '@/config/variables';
-import { User } from '@/lib/models';
+import { useAuth } from '@/components/contexts/AuthProvider';
 
-interface HeroProps {
-  user?: User
-}
-
-export default function Hero({
-  user,
-}: HeroProps) {
+export default function Hero() {
   const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
+  const { user, isLoading } = useAuth();
   return (
     <div className="flex-1 basis-md flex flex-col gap-y-10 items-center justify-center relative">
       <h1 className="text-5xl font-bold text-center uppercase">
         Tech Art
       </h1>
       {
-        user ? (
-          <Button size="lg" className="text-xl animate-bounce" asChild>
+        user && (
+          <Button size="lg" className="text-xl animate-bounce" disabled={isLoading} asChild>
             <Link href="/board">
               ¡Pintemos!
             </Link>
           </Button>
-        ) : (
+        )
+      }
+      {
+        !user && (
           <ModalSignIn>
-            <Button size="lg" className="text-xl animate-bounce" asChild>
-              <Link href={`${BACKEND_URL}/auth/google/login`}>
-                ¡Pintemos!
-              </Link>
+            <Button size="lg" className="text-xl animate-bounce" disabled={isLoading}>
+              ¡Pintemos!
             </Button>
           </ModalSignIn>
         )
