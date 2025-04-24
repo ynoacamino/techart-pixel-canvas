@@ -1,9 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { User, UsersService } from 'src/users/users.service';
+import { User } from '@prisma/client';
+import { UsersService } from 'src/users/users.service';
 
 @Injectable()
 export class AuthService {
-  constructor(private usersService: UsersService) { }
+  constructor(
+    private usersService: UsersService,
+  ) { }
   
   async validateUser({ email, name, avatar }): Promise<User> {
     let user = await this.usersService.findByEmail(email);

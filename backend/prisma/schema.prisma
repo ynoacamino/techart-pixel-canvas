@@ -17,4 +17,15 @@ model User {
   avatar         String
   cellsAvailable Int
   lastGivenAt    DateTime
+  sessions       Session[]
+}
+
+model Session {
+  id             String   @id @default(cuid())
+  userId         Int 
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  sessionToken   String   @unique
+  userAgent      String?
+  ipAddress      String?
+  expiresAt      DateTime
 }
