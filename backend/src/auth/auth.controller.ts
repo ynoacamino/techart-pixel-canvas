@@ -30,7 +30,6 @@ export class AuthController {
 
   @Get('google/login')
   async checkSession(@Req() req: Request, @Res() res: Response) {
-    console.log(req);
     const sessionToken = req.cookies?.['session_token'];
     if (!sessionToken) {
       return res.redirect('/auth/google/redirect');

@@ -1,9 +1,11 @@
 import * as Dialog from '@radix-ui/react-dialog';
 import { Button } from '@/components/ui/button';
 import Google from '@/components/logos/Google';
+import Link from 'next/link';
+import { BACKEND_URL } from '@/config/variables';
 import { Blocks } from '../ui/blocks';
 
-export default function ModalSignIn({ children } : { children: React.ReactNode }) {
+export default function ModalSignIn({ children }: { children: React.ReactNode }) {
   return (
     <Dialog.Root>
       <Dialog.Trigger asChild>
@@ -26,9 +28,11 @@ export default function ModalSignIn({ children } : { children: React.ReactNode }
             Únete a nuestro arte y deja tu pixel
           </Dialog.Description>
           <div className="flex justify-center">
-            <Button variant="outline" className="min-w-[300px]">
-              <Google />
-              Google
+            <Button variant="outline" className="min-w-[300px]" asChild>
+              <Link href={`${BACKEND_URL}/auth/google/login`}>
+                <Google />
+                Google
+              </Link>
             </Button>
           </div>
           <Blocks
