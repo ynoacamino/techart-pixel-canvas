@@ -8,7 +8,7 @@ import MasonryGallery from '@/components/pages/home/MasonryGallery';
 export default function Home() {
   return (
     <>
-      <div className="relative lg:fixed top-0 w-full flex flex-col gap-y-6 py-6 items-center justify-center">
+      <div className="relative lg:fixed top-0 w-full flex flex-col gap-y-6 py-6 px-3 items-center justify-center">
         <Hero />
         <Auth />
       </div>
