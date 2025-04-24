@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { Cron, CronExpression } from '@nestjs/schedule';
 import { addDays } from 'src/common/utils/date.utils';
 import { PrismaService } from 'src/prisma/prisma.service';
 
@@ -57,4 +58,13 @@ export class SessionsService {
       },
     });
   }
+  @Cron(CronExpression.EVERY_DAY_AT_MIDNIGHT)
+  async cleanupExpiredSessions() {
+    return this.prisma.session.deleteMany({
+      where: {
+        expiresAt: { lt: new Date() },
+      },
+    });
+  }
+  
 }
