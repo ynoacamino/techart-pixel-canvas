@@ -28,9 +28,22 @@ export class AuthController {
     return res.json(user);
   }
 
-  @Get('google')
+  @Get('google/login')
   @UseGuards(AuthGuard('google'))
   async googleAuth() { }
+
+  @Get('google/logout')
+  async googleLogout(@Req() req: Request, @Res() res: Response) {
+    const sessionToken = req.cookies['session_token'];
+    if (sessionToken) {
+      const session = await this.sessionsService.getSessionByToken(sessionToken);
+      if (session) {
+        await this.sessionsService.revokeSession(session.id);
+        res.clearCookie('session_token');
+      }
+    }
+    res.redirect(this.configService.get<string>('frontendUrl') || 'http://localhost:3000');
+  }
 
   @Get('google/callback')
   @UseGuards(AuthGuard('google'))
