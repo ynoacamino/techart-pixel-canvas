@@ -1,11 +1,22 @@
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { BACKEND_URL } from '@/config/variables';
+import { useEffect, useRef } from 'react';
 import ModalSignIn from './ModalSignIn';
 import { useAuth } from '../contexts/AuthProvider';
 
 export default function Auth() {
   const { user, isLoading } = useAuth();
+  const triggerModalRef = useRef<HTMLButtonElement>(null);
+  useEffect(() => {
+    if (triggerModalRef.current) {
+      const isRedirectToLogin = localStorage.getItem('isRedirectToLogin');
+      if (isRedirectToLogin) {
+        localStorage.removeItem('isRedirectToLogin');
+        triggerModalRef.current.click();
+      }
+    }
+  }, [triggerModalRef]);
   return (
     !isLoading && (
       <div className="flex flex-col gap-y-4 items-center animate-slide-up w-full">
@@ -44,7 +55,7 @@ export default function Auth() {
           {
             !user && (
               <ModalSignIn>
-                <Button size="sm">
+                <Button size="sm" ref={triggerModalRef}>
                   Iniciar sesión
                 </Button>
               </ModalSignIn>
