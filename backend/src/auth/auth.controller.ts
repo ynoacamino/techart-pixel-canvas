@@ -15,6 +15,19 @@ export class AuthController {
     private configService: ConfigService,
   ) { }
 
+  @Get('me')
+  async me(@Req() req: Request, @Res() res: Response) {
+    const sessionToken = req.cookies['session_token'];
+    if (!sessionToken) {
+      return res.status(401).json({ message: 'Not authenticated' });
+    }
+    const user = await this.sessionsService.getUserBySessionToken(sessionToken);
+    if (!user) {
+      return res.status(401).json({ message: 'Not authenticated' });
+    }
+    return res.json(user);
+  }
+
   @Get('google')
   @UseGuards(AuthGuard('google'))
   async googleAuth() { }
