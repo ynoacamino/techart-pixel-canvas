@@ -1,12 +1,9 @@
 import { Button } from '@/components/ui/button';
+import { User } from '@/lib/models';
 import ModalSignIn from './ModalSignIn';
 
 interface AuthProps {
-  user?: {
-    name: string;
-    email: string;
-    img?: string;
-  }
+  user?: User
 }
 
 export default function Auth({
@@ -22,9 +19,9 @@ export default function Auth({
           user && (
             <div className="flex gap-x-3 items-center">
               {
-                user.img ? (
+                user.avatar ? (
                   <img
-                    src={user.img}
+                    src={user.avatar}
                     alt="Perfil"
                     className="size-10 rounded-full"
                   />

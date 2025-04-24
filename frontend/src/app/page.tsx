@@ -1,14 +1,13 @@
+'use client';
+
 import Auth from '@/components/auth/Auth';
 import Gallery from '@/components/pages/home/Gallery';
 import Hero from '@/components/pages/home/Hero';
 import MasonryGallery from '@/components/pages/home/MasonryGallery';
-
-const user = {
-  name: 'John Doe',
-  email: 'example@example.com',
-};
+import { useUser } from '@/hooks/swr';
 
 export default function Home() {
+  const { user } = useUser();
   return (
     <>
       <div className="relative lg:fixed top-0 w-full flex flex-col gap-y-6 py-6 items-center justify-center">

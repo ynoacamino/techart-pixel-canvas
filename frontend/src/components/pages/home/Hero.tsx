@@ -6,13 +6,10 @@ import { Button } from '@/components/ui/button';
 import { useMediaQuery } from 'react-responsive';
 import Link from 'next/link';
 import { BACKEND_URL } from '@/config/variables';
+import { User } from '@/lib/models';
 
 interface HeroProps {
-  user?: {
-    name: string;
-    email: string;
-    img?: string;
-  }
+  user?: User
 }
 
 export default function Hero({
