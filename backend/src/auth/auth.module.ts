@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
-import { UsersModule } from 'src/users/users.module';
+import { UsersModule } from '@/users/users.module';
 import { PassportModule } from '@nestjs/passport';
 import { ConfigModule } from '@nestjs/config';
-import configuration from 'src/config/configuration';
-import { SessionsModule } from 'src/sessions/sessions.module';
+import configuration from '@/config/configuration';
+import { SessionsModule } from '@/sessions/sessions.module';
 import { GoogleStrategy } from './google.strategy';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';

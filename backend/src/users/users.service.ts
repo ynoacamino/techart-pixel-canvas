@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Role, User } from '@prisma/client';
-import { CELLS_AVAILABLE } from 'src/config/configuration';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { CELLS_AVAILABLE } from '@/config/configuration';
+import { PrismaService } from '@/prisma/prisma.service';
 
 @Injectable()
 export class UsersService {
