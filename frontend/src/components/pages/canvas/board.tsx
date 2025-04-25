@@ -5,7 +5,9 @@ import { useColorPickerStore } from '@/components/providers/colorPicketProvider'
 import { useEffect, useRef, useState } from 'react';
 import { BOARD_SIZE, CELL_SIZE } from '@/config/board';
 
-const socket = io(BACKEND_URL);
+const socket = io(BACKEND_URL, {
+  withCredentials: true,
+});
 
 const cornerStencil = [
   [1, 1, 1, 0, 0, 1, 1, 1],
@@ -29,9 +31,7 @@ export default function Board() {
     const canvas = canvasRef.current;
     const ctx = canvas?.getContext('2d');
 
-    if (!ctx || board.length === 0) return; // <- validación importante
-    // ctx.imageSmoothingEnabled = false;
-    // ctx.filter = 'none';
+    if (!ctx || board.length === 0) return;
 
     for (let y = 0; y < BOARD_SIZE; y += 1) {
       for (let x = 0; x < BOARD_SIZE; x += 1) {

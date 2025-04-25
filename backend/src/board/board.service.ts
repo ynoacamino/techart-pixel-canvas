@@ -2,35 +2,36 @@ import { Injectable, OnModuleInit } from '@nestjs/common';
 import { Board } from './dto/cell.dto';
 import * as path from 'path';
 import * as fs from 'fs/promises';
-import * as cron from 'node-cron';
+import { Cron, CronExpression } from '@nestjs/schedule';
+import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
-export class BoardService implements OnModuleInit {
+export class BoardService {
   private readonly size = 100;
 
   private board: Board;
 
-  constructor() {
+  constructor(
+    private readonly prismaService: PrismaService,
+  ) {
     this.loadBoard();
   }
-
-  onModuleInit() {
-    cron.schedule('*/5 * * * *', () => {
-      this.saveBoard().catch((err) => console.error('Error al guardar el board:', err));
-    });
-  }
-
 
   private createEmptyBoard(): Board {
     return Array.from({ length: this.size }, () => Array.from({ length: this.size }, () => '#FFFFFF'));
   }
 
-  private async saveBoard(): Promise<void> {
+  @Cron(CronExpression.EVERY_5_MINUTES)
+  async saveBoard(): Promise<void> {
     const backupDir = path.join(process.cwd(), 'backup');
     const backupPath = path.join(backupDir, `${Date.now()}.json`);
 
-    await fs.mkdir(backupDir, { recursive: true });
-    await fs.writeFile(backupPath, JSON.stringify(this.board));
+    try {
+      await fs.mkdir(backupDir, { recursive: true });
+      await fs.writeFile(backupPath, JSON.stringify(this.board));
+    } catch (error) {
+      console.error('Error saving board:', error);
+    }
   }
 
   private async loadBoard(): Promise<void> {
