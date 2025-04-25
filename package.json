@@ -1,0 +1,18 @@
+{
+  "name": "techart-pixel-canvas",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "pnpm -r run dev",
+    "build": "pnpm -r run build",
+    "dev:frontend": "pnpm --filter frontend run dev",
+    "dev:backend": "pnpm --filter backend run dev",
+    "frontend": "pnpm --filter frontend",
+    "backend": "pnpm --filter backend"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.5.2"
+}

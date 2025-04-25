@@ -12,6 +12,10 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 
+# Prisma
+generated/prisma/
+prisma/*.db*
+
 # OS
 .DS_Store
 
@@ -54,3 +58,8 @@ pids
 
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+bun.lock
+backup*
+db*
+docker-compose.yml
