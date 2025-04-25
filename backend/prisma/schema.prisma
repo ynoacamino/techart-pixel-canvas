@@ -16,14 +16,15 @@ enum Role {
 }
 
 model User {
-  id             Int       @id @default(autoincrement())
-  email          String    @unique
-  name           String
-  avatar         String
-  role           Role      @default(auth)
-  cellsAvailable Int
-  lastGivenAt    DateTime
-  sessions       Session[]
+  id              Int       @id @default(autoincrement())
+  email           String    @unique
+  name            String
+  avatar          String
+  role            Role      @default(auth)
+  cellsAvailable  Int
+  upcomingCellsAt DateTime
+  claimed         Boolean   @default(false)
+  sessions        Session[]
 }
 
 model Session {

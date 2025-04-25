@@ -1,7 +1,8 @@
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
 import { ConfigService } from '@nestjs/config';
 import * as cookieParser from 'cookie-parser';
+import { AppModule } from './app.module';
+import configuration from './config/configuration';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -9,11 +10,11 @@ async function bootstrap() {
   app.use(cookieParser());
 
   app.enableCors({
-    origin: 'http://localhost:3000',
+    origin: configuration().frontendUrl,
     credentials: true,
     methods: ['GET', 'POST'],
     allowedHeaders: ['Content-Type'],
-  })
+  });
 
   const configService: ConfigService = app.get(ConfigService);
   const apiPort = configService.get<number>('port') ?? 8080;

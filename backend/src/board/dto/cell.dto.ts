@@ -2,12 +2,12 @@ import { IsInt, IsHexColor } from 'class-validator';
 
 export class UpdateCellDto {
   @IsInt()
-  x: number;
+    x: number;
 
   @IsInt()
-  y: number;
+    y: number;
 
   @IsHexColor()
-  color: string;
+    color: string;
 }
 export type Board = string[][];

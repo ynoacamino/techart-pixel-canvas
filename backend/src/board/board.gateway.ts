@@ -8,28 +8,30 @@ import {
   WsException,
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
-import { BoardService } from './board.service';
-import { UpdateCellDto } from './dto/cell.dto';
 import { Logger } from '@nestjs/common';
 import { SessionsService } from 'src/sessions/sessions.service';
-import { PrismaService } from 'src/prisma/prisma.service';
 import { User } from '@prisma/client';
+import { UsersService } from 'src/users/users.service';
+import configuration, { CELLS_AVAILABLE, UPCOMING_CELLS_TIME_OUT } from 'src/config/configuration';
+import { UpdateCellDto } from './dto/cell.dto';
+import { BoardService } from './board.service';
 
 @WebSocketGateway({
   cors: {
-    origin: 'http://localhost:3000',
+    origin: configuration().frontendUrl,
     credentials: true,
   },
 })
 export class BoardGateway implements OnGatewayConnection {
   private logger: Logger = new Logger('EventsGateway');
+
   @WebSocketServer()
     server: Server;
 
   constructor(
     private readonly boardService: BoardService,
     private readonly sessionsService: SessionsService,
-    private readonly prismaService: PrismaService,
+    private readonly userService: UsersService,
   ) {}
 
   async handleConnection(@ConnectedSocket() client: Socket) {
@@ -51,7 +53,7 @@ export class BoardGateway implements OnGatewayConnection {
 
   @SubscribeMessage('cell_clicked')
   async handleCellClick(
-    @ConnectedSocket() client: Socket,
+  @ConnectedSocket() client: Socket,
     @MessageBody() data: UpdateCellDto,
   ) {
     const userSession = client.data.user as User | null;
@@ -59,9 +61,7 @@ export class BoardGateway implements OnGatewayConnection {
       throw new WsException('User not authenticated');
     }
 
-    const user = await this.prismaService.user.findUnique({
-      where: { id: userSession.id },
-    });
+    const user = await this.userService.findById(userSession.id);
 
     if (!user) {
       throw new WsException('User not found');
@@ -70,10 +70,24 @@ export class BoardGateway implements OnGatewayConnection {
     const { x, y, color } = data;
 
     if (user.cellsAvailable > 0) {
-      await this.prismaService.user.update({
-        where: { id: user.id },
-        data: { cellsAvailable: user.cellsAvailable - 1 },
-      });
+      if (user.upcomingCellsAt.getTime() < Date.now()) {
+        await this.userService.updateUser(user.id, {
+          cellsAvailable: user.cellsAvailable - 1,
+          upcomingCellsAt: new Date(Date.now() + UPCOMING_CELLS_TIME_OUT),
+          claimed: false,
+        });
+
+        setTimeout(async () => {
+          await this.userService.updateUser(user.id, {
+            cellsAvailable: CELLS_AVAILABLE,
+            claimed: true,
+          });
+        }, UPCOMING_CELLS_TIME_OUT);
+      } else {
+        await this.userService.updateUser(user.id, {
+          cellsAvailable: user.cellsAvailable - 1,
+        });
+      }
     } else {
       return;
     }
@@ -88,12 +102,12 @@ export class BoardGateway implements OnGatewayConnection {
     if (!cookies) return null;
 
     const parsedCookies = Object.fromEntries(
-      cookies.split(';').map(cookie => {
+      cookies.split(';').map((cookie) => {
         const [key, value] = cookie.trim().split('=');
         return [key, decodeURIComponent(value)];
       }),
     );
 
-    return parsedCookies['session_token'] || null;
+    return parsedCookies.session_token || null;
   }
 }

@@ -1,19 +1,19 @@
-import { Injectable } from "@nestjs/common";
-import { PassportStrategy } from "@nestjs/passport";
-import { Profile, Strategy, VerifyCallback } from "passport-google-oauth20";
-import { ConfigService } from "@nestjs/config";
+import { Injectable } from '@nestjs/common';
+import { PassportStrategy } from '@nestjs/passport';
+import { Profile, Strategy, VerifyCallback } from 'passport-google-oauth20';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
-export class GoogleStrategy extends PassportStrategy(Strategy, "google") {
+export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
   constructor(
     private configService: ConfigService,
   ) {
     super({
-      clientID: configService.get<string>("clientId") || '',
-      clientSecret: configService.get<string>("clientSecret") || '',
-      callbackURL: configService.get<string>("callbackURL") || '',
-      scope: ["email", "profile"],
-    })
+      clientID: configService.get<string>('clientId') || '',
+      clientSecret: configService.get<string>('clientSecret') || '',
+      callbackURL: configService.get<string>('callbackURL') || '',
+      scope: ['email', 'profile'],
+    });
   }
 
   async validate(
@@ -26,8 +26,10 @@ export class GoogleStrategy extends PassportStrategy(Strategy, "google") {
     const name = profile.displayName;
     const avatar = profile.photos?.at(0)?.value;
     if (!email) {
-      return done(new Error("No email found"), undefined);
+      return done(new Error('No email found'), undefined);
     }
-    done(null, { email, name, avatar, accessToken, refreshToken });
+    done(null, {
+      email, name, avatar, accessToken, refreshToken,
+    });
   }
 }
