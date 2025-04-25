@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
-import { SessionsModule } from 'src/sessions/sessions.module';
-import { PrismaModule } from 'src/prisma/prisma.module';
-import { UsersModule } from 'src/users/users.module';
+import { SessionsModule } from '@/sessions/sessions.module';
+import { PrismaModule } from '@/prisma/prisma.module';
+import { UsersModule } from '@/users/users.module';
 import { BoardGateway } from './board.gateway';
 import { BoardService } from './board.service';
 import { BoardController } from './board.controller';

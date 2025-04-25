@@ -3,7 +3,11 @@ FROM oven/bun:latest AS builder
 WORKDIR /app
 
 COPY package.json ./
+
+RUN apt-get update && apt-get install -y --no-install-recommends openssl && rm -rf /var/lib/apt/lists/*
+
 RUN bun install
+RUN bun pm trust --all
 
 COPY . .
 
@@ -11,14 +15,4 @@ RUN bun run prisma:generate
 
 RUN bun run build
 
-FROM oven/bun:latest AS runner
-
-WORKDIR /app
-
-COPY --from=builder /app/dist /app
-COPY --from=builder /app/node_modules /app/node_modules
-COPY --from=builder /app/prisma /app/prisma
-COPY --from=builder /app/package.json /app/package.json
-
-USER bun
-CMD [ "bun", "/app/dist/src/main" ]
+CMD bun run prisma:migrate && bun /app/dist/src/main

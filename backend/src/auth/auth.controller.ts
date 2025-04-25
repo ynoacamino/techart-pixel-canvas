@@ -2,10 +2,10 @@ import {
   Controller, Get, Req, Res, UseGuards,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { SessionsService } from 'src/sessions/sessions.service';
+import { SessionsService } from '@/sessions/sessions.service';
 import { Request, Response } from 'express';
 import { Session, User } from '@prisma/client';
-import { addDays } from 'src/common/utils/date.utils';
+import { addDays } from '@/common/utils/date.utils';
 import { ConfigService } from '@nestjs/config';
 import { AuthService } from './auth.service';
 

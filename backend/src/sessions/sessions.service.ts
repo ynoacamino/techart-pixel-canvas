@@ -1,13 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { Cron, CronExpression } from '@nestjs/schedule';
-import { addDays } from 'src/common/utils/date.utils';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { addDays } from '@/common/utils/date.utils';
+import { PrismaService } from '@/prisma/prisma.service';
 
 @Injectable()
 export class SessionsService {
   constructor(private prisma: PrismaService) { }
 
-  async createSession({ userId, userAgent, ipAddress } : { userId: number, userAgent?: string, ipAddress?: string }) {
+  async createSession(
+    { userId, userAgent, ipAddress } : { userId: number, userAgent?: string, ipAddress?: string },
+  ) {
     return this.prisma.session.create({
       data: {
         userId,

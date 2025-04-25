@@ -9,10 +9,10 @@ import {
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
 import { Logger } from '@nestjs/common';
-import { SessionsService } from 'src/sessions/sessions.service';
+import { SessionsService } from '@/sessions/sessions.service';
 import { User } from '@prisma/client';
-import { UsersService } from 'src/users/users.service';
-import configuration, { CELLS_AVAILABLE, UPCOMING_CELLS_TIME_OUT } from 'src/config/configuration';
+import { UsersService } from '@/users/users.service';
+import configuration, { CELLS_AVAILABLE, UPCOMING_CELLS_TIME_OUT } from '@/config/configuration';
 import { UpdateCellDto } from './dto/cell.dto';
 import { BoardService } from './board.service';
 
