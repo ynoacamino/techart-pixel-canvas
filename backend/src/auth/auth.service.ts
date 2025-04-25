@@ -7,7 +7,7 @@ export class AuthService {
   constructor(
     private usersService: UsersService,
   ) { }
-  
+
   async validateUser({ email, name, avatar }): Promise<User> {
     let user = await this.usersService.findByEmail(email);
     if (!user) {

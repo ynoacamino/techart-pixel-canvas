@@ -1,9 +1,8 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
-import { Board } from './dto/cell.dto';
 import * as path from 'path';
 import * as fs from 'fs/promises';
 import { Cron, CronExpression } from '@nestjs/schedule';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { Board } from './dto/cell.dto';
 
 @Injectable()
 export class BoardService {
@@ -11,9 +10,7 @@ export class BoardService {
 
   private board: Board;
 
-  constructor(
-    private readonly prismaService: PrismaService,
-  ) {
+  constructor() {
     this.loadBoard();
   }
 
