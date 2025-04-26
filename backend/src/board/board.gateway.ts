@@ -71,10 +71,19 @@ export class BoardGateway implements OnGatewayConnection {
 
     if (user.cellsAvailable > 0) {
       if (user.upcomingCellsAt.getTime() < Date.now()) {
+        const cellsAvailable = user.cellsAvailable - 1;
+        const upcomingCellsAt = new Date(Date.now() + UPCOMING_CELLS_TIME_OUT);
+
         await this.userService.updateUser(user.id, {
-          cellsAvailable: user.cellsAvailable - 1,
-          upcomingCellsAt: new Date(Date.now() + UPCOMING_CELLS_TIME_OUT),
+          cellsAvailable,
+          upcomingCellsAt,
           claimed: false,
+        });
+
+        client.emit("user_state", {
+          cellsAvailable,
+          claimed: false,
+          upcomingCellsAt,
         });
 
         setTimeout(async () => {
@@ -82,10 +91,24 @@ export class BoardGateway implements OnGatewayConnection {
             cellsAvailable: CELLS_AVAILABLE,
             claimed: true,
           });
+
+          client.emit("user_state", {
+            cellsAvailable: CELLS_AVAILABLE,
+            claimed: true,
+            upcomingCellsAt: user.upcomingCellsAt,
+          })
         }, UPCOMING_CELLS_TIME_OUT);
       } else {
+        const cellsAvailable = user.cellsAvailable - 1;
+
         await this.userService.updateUser(user.id, {
-          cellsAvailable: user.cellsAvailable - 1,
+          cellsAvailable: cellsAvailable,
+        });
+
+        client.emit("user_state", {
+          cellsAvailable,
+          claimed: user.claimed,
+          upcomingCellsAt: user.upcomingCellsAt,
         });
       }
     } else {
