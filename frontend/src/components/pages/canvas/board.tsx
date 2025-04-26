@@ -4,6 +4,7 @@ import { io } from 'socket.io-client';
 import { useColorPickerStore } from '@/components/providers/colorPicketProvider';
 import { useEffect, useRef, useState } from 'react';
 import { BOARD_SIZE, CELL_SIZE } from '@/config/board';
+import { useAuth } from '@/components/contexts/AuthProvider';
 
 const socket = io(BACKEND_URL, {
   withCredentials: true,
@@ -25,6 +26,7 @@ export default function Board() {
   const currentColor = useColorPickerStore((state) => state.currentColor);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
+  const { user } = useAuth();
   const [hoveredCell, setHoveredCell] = useState<{ x: number, y: number } | null>(null);
 
   useEffect(() => {
@@ -57,6 +59,9 @@ export default function Board() {
   };
 
   const handleMouseMove = (e: React.MouseEvent<HTMLCanvasElement>) => {
+    if (!user) return;
+    if (user.cellsAvailable === 0) return;
+
     const canvas = canvasRef.current;
     if (!canvas) return;
 

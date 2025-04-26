@@ -3,6 +3,7 @@
 import { useAuth } from '@/components/contexts/AuthProvider';
 import Board from '@/components/pages/canvas/board';
 import ColorPicker from '@/components/pages/canvas/colorPicker';
+import Timer from '@/components/pages/canvas/timer';
 import Zoom from '@/components/ui/zoom';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
@@ -26,6 +27,7 @@ export default function Home() {
         </div>
       </Zoom>
       <ColorPicker />
+      <Timer />
     </>
   );
 }
