@@ -8,14 +8,27 @@ type ContextValue = {
   user?: User;
   isLoading: boolean;
   error?: Error;
+  restoreCells: (mount: number) => void;
+  reduceCells: () => void;
+  setUpcomingCellsAt: (date: Date) => void;
+  setClaimed: (claim: boolean) => void;
+  setCellsAvailable: (mount: number) => void;
 };
 
 const AuthContext = createContext<ContextValue>({
-  user: undefined, isLoading: true, error: undefined,
+  user: undefined,
+  isLoading: true,
+  error: undefined,
+  restoreCells: () => {},
+  reduceCells: () => {},
+  setUpcomingCellsAt: () => {},
+  setClaimed: () => {},
+  setCellsAvailable: () => {},
 });
 
 function AuthProvider({ children }: { children: React.ReactNode }) {
   const data = useUser();
+
   return (
     <AuthContext.Provider value={data}>
       {children}
