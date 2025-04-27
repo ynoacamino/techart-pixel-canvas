@@ -4,7 +4,7 @@ import { io } from 'socket.io-client';
 import { useColorPickerStore } from '@/components/providers/colorPicketProvider';
 import { useEffect, useRef, useState } from 'react';
 import { BOARD_SIZE, CELL_SIZE } from '@/config/board';
-import { useAuth } from '@/components/contexts/AuthProvider';
+import { useCellStore } from '@/components/providers/cellProvider';
 
 const socket = io(BACKEND_URL, {
   withCredentials: true,
@@ -22,11 +22,13 @@ const cornerStencil = [
 ];
 
 export default function Board() {
+  const [ctrlClicked, setCtrlClicked] = useState(false);
+
   const { board, changeColor } = useBoard(socket);
   const currentColor = useColorPickerStore((state) => state.currentColor);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const cellsAvailable = useCellStore((store) => store.cellsAvailable);
 
-  const { user } = useAuth();
   const [hoveredCell, setHoveredCell] = useState<{ x: number, y: number } | null>(null);
 
   useEffect(() => {
@@ -43,9 +45,33 @@ export default function Board() {
     }
   }, [board]);
 
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.ctrlKey) {
+        setCtrlClicked(true);
+      }
+    };
+
+    const handleKeyUp = (event: KeyboardEvent) => {
+      if (!event.ctrlKey) {
+        setCtrlClicked(false);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('keyup', handleKeyUp);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('keyup', handleKeyUp);
+    };
+  }, []);
+
   const handleClick = (e: React.MouseEvent<HTMLCanvasElement>) => {
     const canvas = canvasRef.current;
     if (!canvas) return;
+
+    if (ctrlClicked) return;
 
     const rect = canvas.getBoundingClientRect();
 
@@ -59,9 +85,6 @@ export default function Board() {
   };
 
   const handleMouseMove = (e: React.MouseEvent<HTMLCanvasElement>) => {
-    if (!user) return;
-    if (user.cellsAvailable === 0) return;
-
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -91,7 +114,7 @@ export default function Board() {
         ctx.fillRect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
       }
     }
-
+    if (cellsAvailable === 0) return;
     if (hoveredCell && ctx) {
       const { x, y } = hoveredCell;
       const baseX = x * CELL_SIZE;
