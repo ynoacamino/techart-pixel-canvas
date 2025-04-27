@@ -1,17 +1,21 @@
-import { useAuth } from '@/components/contexts/AuthProvider';
+import { useCellStore } from '@/components/providers/cellProvider';
+import { AnimatePresence, motion } from 'motion/react';
 import { useEffect, useState } from 'react';
 
 export default function Timer() {
-  const { user } = useAuth();
   const [time, setTime] = useState(0);
+  const [lastUpcomingCellsAt, setLastUpcomingCellsAt] = useState('');
+
+  const cellsAvailable = useCellStore((state) => state.cellsAvailable);
+  const claimed = useCellStore((state) => state.claimed);
+  const upcomingCellsAt = useCellStore((state) => state.upcomingCellsAt);
 
   useEffect(() => {
-    if (!user) {
-      return;
+    if (upcomingCellsAt !== lastUpcomingCellsAt) {
+      setLastUpcomingCellsAt(upcomingCellsAt);
+      setTime(new Date(upcomingCellsAt).getTime() - Date.now());
     }
-
-    setTime((new Date(user.upcomingCellsAt)).getTime() - Date.now());
-  }, [user]);
+  }, [upcomingCellsAt]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -34,17 +38,34 @@ export default function Timer() {
   };
 
   return (
-    <div className="text-2xl font-bold bg-white p-10 absolute top-6 right-6">
-      <span>
-        {formatTime(time)}
+    <div className="absolute top-3 right-3 md:top-6 md:right-6 text-primary-foreground font-bold gap-4 flex text-lg md:text-2xl">
 
-      </span>
-      |||||
-      <span>
-        {
-          user ? user.cellsAvailable : 'N/A'
-        }
-      </span>
+      <AnimatePresence initial={false}>
+        {!claimed ? (
+          <motion.div
+            className="bg-zinc-800 rounded-md py-3 px-5 flex flex-col items-center justify-center"
+            initial={{ opacity: 0, scale: 0.5 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.5 }}
+            key="box"
+          >
+            <span className="text-xs md:text-sm">
+              Proximos:
+            </span>
+            <span>
+              {formatTime(time)}
+            </span>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
+      <div className="bg-zinc-800 rounded-md py-3 px-5 flex flex-col items-center justify-center">
+        <span className="text-sm">
+          Disponibles:
+        </span>
+        <span>
+          {cellsAvailable}
+        </span>
+      </div>
     </div>
   );
 }

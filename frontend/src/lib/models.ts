@@ -5,6 +5,6 @@ export interface User {
   role: 'auth' | 'admin';
   avatar: string;
   cellsAvailable: number;
-  upcomingCellsAt: Date;
+  upcomingCellsAt: string;
   claimed: boolean;
 }

@@ -6,6 +6,6 @@ interface ColorPickerState {
 }
 
 export const useColorPickerStore = create<ColorPickerState>((set) => ({
-  currentColor: '#FF0000',
+  currentColor: '#fb2c36',
   setCurrentColor: (color) => set({ currentColor: color }),
 }));
