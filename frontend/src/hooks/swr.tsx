@@ -1,73 +1,27 @@
+import { useCellStore } from '@/components/providers/cellProvider';
 import { api } from '@/lib/api';
 import { User } from '@/lib/models';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import useSWR from 'swr';
 
 export const useUser = () => {
-  const [user, setUser] = useState<User | undefined>();
-  const { data, error } = useSWR<User, Error>('/api/auth/me', () => api.getUser());
+  const { data, error, isLoading } = useSWR<User, Error>('/api/auth/me', () => api.getUser());
+
+  const setCellsAvailable = useCellStore((state) => state.setCellsAvailable);
+  const setClaimed = useCellStore((state) => state.setClaimed);
+  const setUpcomingCellsAt = useCellStore((state) => state.setUpcomingCellsAt);
 
   useEffect(() => {
-    if (data) {
-      setUser(data);
+    if (!isLoading && data) {
+      setCellsAvailable(data.cellsAvailable);
+      setClaimed(data.claimed);
+      setUpcomingCellsAt(data.upcomingCellsAt);
     }
-  }, [data]);
-
-  const reduceCells = () => {
-    setUser((prevUser) => {
-      if (!prevUser) return undefined;
-      return {
-        ...prevUser,
-        cellsAvailable: prevUser.cellsAvailable - 1,
-      };
-    });
-  };
-
-  const setUpcomingCellsAt = (date: Date) => {
-    if (user) {
-      setUser({
-        ...user,
-        upcomingCellsAt: date,
-      });
-    }
-  };
-
-  const setClaimed = (claim: boolean) => {
-    if (user) {
-      setUser({
-        ...user,
-        claimed: claim,
-      });
-    }
-  };
-
-  const restoreCells = (mount: number) => {
-    if (user) {
-      setUser({
-        ...user,
-        cellsAvailable: mount,
-      });
-    }
-  };
-
-  const setCellsAvailable = (mount: number) => {
-    setUser((prevUser) => {
-      if (!prevUser) return undefined;
-      return {
-        ...prevUser,
-        cellsAvailable: mount,
-      };
-    });
-  };
+  }, [isLoading]);
 
   return {
-    user,
+    user: data,
     isLoading: !error && !data,
     error,
-    restoreCells,
-    reduceCells,
-    setUpcomingCellsAt,
-    setClaimed,
-    setCellsAvailable,
   };
 };
