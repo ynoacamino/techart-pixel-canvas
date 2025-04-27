@@ -10,7 +10,7 @@ import {
 import { Server, Socket } from 'socket.io';
 import { Logger } from '@nestjs/common';
 import { SessionsService } from '@/sessions/sessions.service';
-import { User } from '@prisma/client';
+import { Role, User } from '@prisma/client';
 import { UsersService } from '@/users/users.service';
 import configuration, { CELLS_AVAILABLE, UPCOMING_CELLS_TIME_OUT } from '@/config/configuration';
 import { UpdateCellDto } from './dto/cell.dto';
@@ -69,6 +69,13 @@ export class BoardGateway implements OnGatewayConnection {
 
     const { x, y, color } = data;
 
+    if (user.role === Role.admin) {
+      this.boardService.updateCell(x, y, color);
+      this.server.emit('cell_updated', { x, y, color });
+
+      return;
+    }
+
     if (user.cellsAvailable > 0) {
       if (user.upcomingCellsAt.getTime() < Date.now()) {
         const cellsAvailable = user.cellsAvailable - 1;
@@ -111,12 +118,10 @@ export class BoardGateway implements OnGatewayConnection {
           upcomingCellsAt: user.upcomingCellsAt,
         });
       }
-    } else {
-      return;
-    }
 
-    this.boardService.updateCell(x, y, color);
-    this.server.emit('cell_updated', { x, y, color });
+      this.boardService.updateCell(x, y, color);
+      this.server.emit('cell_updated', { x, y, color });
+    }
   }
 
   private extractTokenFromHandshake(client: Socket): string | null {

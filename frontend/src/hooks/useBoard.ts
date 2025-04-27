@@ -9,12 +9,9 @@ export const useBoard = (socket: Socket) => {
   const [board, setBoard] = useState<string[][]>([]);
 
   const cellsAvailable = useCellStore((state) => state.cellsAvailable);
+  const role = useCellStore((state) => state.role);
   const setCellsAvailable = useCellStore((state) => state.setCellsAvailable);
-
-  // const claimed = useCellStore((state) => state.claimed);
   const setClaimed = useCellStore((state) => state.setClaimed);
-
-  // const upcomingCellsAt = useCellStore((state) => state.upcomingCellsAt);
   const setUpcomingCellsAt = useCellStore((state) => state.setUpcomingCellsAt);
 
   useEffect(() => {
@@ -66,7 +63,9 @@ export const useBoard = (socket: Socket) => {
       return newBoard;
     });
 
-    setCellsAvailable(cellsAvailable - 1);
+    if (role !== 'auth') {
+      setCellsAvailable(cellsAvailable - 1);
+    }
     socket.emit('cell_clicked', { x, y, color });
   };
 

@@ -39,7 +39,6 @@ export default function Timer() {
 
   return (
     <div className="absolute top-3 right-3 md:top-6 md:right-6 text-primary-foreground font-bold gap-4 flex text-lg md:text-2xl">
-
       <AnimatePresence initial={false}>
         {!claimed ? (
           <motion.div

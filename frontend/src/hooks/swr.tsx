@@ -10,12 +10,18 @@ export const useUser = () => {
   const setCellsAvailable = useCellStore((state) => state.setCellsAvailable);
   const setClaimed = useCellStore((state) => state.setClaimed);
   const setUpcomingCellsAt = useCellStore((state) => state.setUpcomingCellsAt);
+  const setRole = useCellStore((state) => state.setRole);
 
   useEffect(() => {
     if (!isLoading && data) {
-      setCellsAvailable(data.cellsAvailable);
       setClaimed(data.claimed);
       setUpcomingCellsAt(data.upcomingCellsAt);
+      setRole(data.role);
+      if (data.role === 'admin') {
+        setCellsAvailable(Infinity);
+      } else {
+        setCellsAvailable(data.cellsAvailable);
+      }
     }
   }, [isLoading]);
 
