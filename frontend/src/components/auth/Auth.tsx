@@ -57,7 +57,7 @@ export default function Auth() {
                   {
                     user.role === 'admin' && (
                       <Button size="sm" asChild>
-                        <Link href="/admin">
+                        <Link href="/board">
                           Administrar tablero
                         </Link>
                       </Button>
