@@ -1,7 +1,7 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import { motion } from 'motion/react';
+import { useEffect, useState } from 'react';
 
 interface GalleryProps {
   images?: string[];
@@ -38,7 +38,7 @@ export default function MasonryGallery({
     });
   }, []);
   return (
-    <masonry-layout maxcolwidth="200" gap="8" className="flex lg:hidden px-2 mt-15">
+    <masonry-layout maxcolwidth="300" gap="8" className="px-2 mt-15">
       {
         images
           ? (images.map((image, index) => (
