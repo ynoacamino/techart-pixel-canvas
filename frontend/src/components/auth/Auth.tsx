@@ -1,10 +1,10 @@
 import { Button } from '@/components/ui/button';
-import Link from 'next/link';
 import { BACKEND_URL } from '@/config/variables';
+import Link from 'next/link';
 import { useEffect, useRef } from 'react';
 import { toast } from 'sonner';
-import ModalSignIn from './ModalSignIn';
 import { useAuth } from '../contexts/AuthProvider';
+import ModalSignIn from './ModalSignIn';
 
 export default function Auth() {
   const { user, isLoading } = useAuth();
@@ -28,7 +28,7 @@ export default function Auth() {
   }, []);
   return (
     !isLoading && (
-      <div className="flex flex-col gap-y-4 items-center animate-slide-up w-full">
+      <div className="flex flex-col gap-y-4 items-center animate-slide-up w-full px-4">
         <p>
           {user ? '¡Bienvenido de nuevo!' : 'Inicia sesión para pintar'}
         </p>
@@ -36,7 +36,7 @@ export default function Auth() {
           {
             user && (
               <>
-                <div className="flex gap-x-3 items-center">
+                <div className="flex gap-x-3 items-center text-balance justify-center">
                   {
                     user.avatar ? (
                       <img
@@ -49,7 +49,7 @@ export default function Auth() {
                     )
                   }
                   <div className="flex flex-col">
-                    <p className="text-lg font-bold">{user.name}</p>
+                    <p className="text-lg font-bold break-words">{user.name}</p>
                     <p className="text-sm font-light text-gray-700">{user.email}</p>
                   </div>
                 </div>

@@ -34,4 +34,4 @@ function useAuth() {
   return context;
 }
 
-export { AuthProvider, type ContextValue as AuthContextValue, useAuth };
+export { AuthProvider, useAuth, type ContextValue as AuthContextValue };
