@@ -1,4 +1,5 @@
 import { AuthProvider } from '@/components/contexts/AuthProvider';
+import { BarScroll } from '@/components/ui/barscroll';
 import { Toaster } from '@/components/ui/sonner';
 import type { Metadata } from 'next';
 import { Geist } from 'next/font/google';
@@ -22,13 +23,17 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} antialiased bg-zinc-300 flex flex-col items-center`}
+        className={`${geistSans.variable} antialiased flex flex-col items-center`}
       >
         {/* eslint-disable-next-line max-len */}
-        {/* <div className="fixed top-0 z-[-2] h-screen w-screen bg-zinc-300 bg-[radial-gradient(#aaa_1px,#d4d4d8_1px)] bg-[size:20px_20px]" /> */}
+        {/* <div className="fixed inset-0 z-10 bg-zinc-300 bg-[radial-gradient(#aaa_1px,#d4d4d8_1px)] bg-[size:20px_20px]" /> */}
         {/* eslint-disable-next-line max-len */}
-        {/* <div className="fixed inset-0 -z-10 h-full w-full bg-zinc-100 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px]" /> */}
-        <div className="fixed inset-0 -z-10 h-full w-full bg-zinc-100 bg-[radial-gradient(#d8dade_1px,transparent_1px)] [background-size:16px_16px]" />
+        {/* <div className="fixed inset-0 -z-10 bg-zinc-100 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px]" /> */}
+        <BarScroll side="left" />
+        <BarScroll side="right" />
+
+        {/* eslint-disable-next-line max-len */}
+        {/* <div className="fixed inset-0 bg-radial-[ellipse_100px_50%_at_0%_50%] from-[#d5c5ff] to-transparent" /> */}
         <AuthProvider>
           {children}
         </AuthProvider>

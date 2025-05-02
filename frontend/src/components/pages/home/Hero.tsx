@@ -12,7 +12,7 @@ export default function Hero() {
   const { user, isLoading } = useAuth();
   return (
     <div className="grow basis-lg flex flex-col gap-y-10 items-center justify-center relative">
-      <h1 className="text-5xl font-bold text-center uppercase">
+      <h1 className="text-5xl lg:text-6xl font-bold text-center uppercase">
         Tech Art
       </h1>
       {
