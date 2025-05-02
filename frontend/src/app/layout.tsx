@@ -24,6 +24,11 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} antialiased bg-zinc-300 flex flex-col items-center`}
       >
+        {/* eslint-disable-next-line max-len */}
+        {/* <div className="fixed top-0 z-[-2] h-screen w-screen bg-zinc-300 bg-[radial-gradient(#aaa_1px,#d4d4d8_1px)] bg-[size:20px_20px]" /> */}
+        {/* eslint-disable-next-line max-len */}
+        {/* <div className="fixed inset-0 -z-10 h-full w-full bg-zinc-100 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px]" /> */}
+        <div className="fixed inset-0 -z-10 h-full w-full bg-zinc-100 bg-[radial-gradient(#d8dade_1px,transparent_1px)] [background-size:16px_16px]" />
         <AuthProvider>
           {children}
         </AuthProvider>
