@@ -17,60 +17,6 @@ const templates = [
   {
     height: 150,
   },
-  {
-    height: 180,
-  },
-  {
-    height: 120,
-  },
-  {
-    height: 100,
-  },
-  {
-    height: 200,
-  },
-  {
-    height: 220,
-  },
-  {
-    height: 150,
-  },
-  {
-    height: 180,
-  },
-  {
-    height: 120,
-  },
-  {
-    height: 100,
-  },
-  {
-    height: 180,
-  },
-  {
-    height: 120,
-  },
-  {
-    height: 100,
-  },
-  {
-    height: 200,
-  },
-  {
-    height: 220,
-  },
-  {
-    height: 150,
-  },
-  {
-    height: 180,
-  },
-  {
-    height: 120,
-  },
-  {
-    height: 100,
-  },
 ];
 
 export default function MasonryGallery({
@@ -92,9 +38,10 @@ export default function MasonryGallery({
               src={image}
               alt="Elemento de galería"
               className="rounded-md object-cover mb-2"
-              whileInView={{ opacity: 1, y: 0 }}
-              initial={{ opacity: 0, y: 100 }}
-              transition={{ delay: 0.5, duration: 1000 }}
+              whileInView={{ scale: 1, opacity: 1 }}
+              initial={{ scale: 0.6, opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              viewport={{ amount: 0.1, once: true }}
             />
           )))
           : (templates.map((template, index) => (
