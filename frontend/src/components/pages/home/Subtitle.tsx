@@ -6,7 +6,6 @@ import { useMediaQuery } from 'react-responsive';
 export default function Subtitle({ primary, secundary }: { primary: string, secundary: string }) {
   const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
   return (
-    <div className="flex flex-col md:flex-row justify-center items-center gap-10">
     <div className="flex flex-col md:flex-row justify-center items-center gap-x-10 gap-y-15">
       <div className="flex">
         <Blocks cols={isMobile ? 10 : 7} rows={2} ratio={1.5} color="yellow" />
