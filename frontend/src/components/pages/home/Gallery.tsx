@@ -1,15 +1,34 @@
 import MasonryGallery from './MasonryGallery';
 import Subtitle from './Subtitle';
 
+const IMAGES = [
+  'https://ynoa-uploader.ynoacamino.site/uploads/1746501900_1.webp',
+  'https://ynoa-uploader.ynoacamino.site/uploads/1746501913_2.webp',
+  'https://ynoa-uploader.ynoacamino.site/uploads/1746501926_3.webp',
+  'https://ynoa-uploader.ynoacamino.site/uploads/1746501937_4.webp',
+  'https://ynoa-uploader.ynoacamino.site/uploads/1746501951_5.webp',
+  'https://ynoa-uploader.ynoacamino.site/uploads/1746501968_6.webp',
+  'https://ynoa-uploader.ynoacamino.site/uploads/1746501979_7.webp',
+  'https://ynoa-uploader.ynoacamino.site/uploads/1746501990_8.webp',
+  'https://ynoa-uploader.ynoacamino.site/uploads/1746501937_4.webp',
+  'https://ynoa-uploader.ynoacamino.site/uploads/1746501990_8.webp',
+  'https://ynoa-uploader.ynoacamino.site/uploads/1746501968_6.webp',
+  'https://ynoa-uploader.ynoacamino.site/uploads/1746501951_5.webp',
+  'https://ynoa-uploader.ynoacamino.site/uploads/1746501900_1.webp',
+  'https://ynoa-uploader.ynoacamino.site/uploads/1746501926_3.webp',
+  'https://ynoa-uploader.ynoacamino.site/uploads/1746501979_7.webp',
+  'https://ynoa-uploader.ynoacamino.site/uploads/1746501913_2.webp',
+];
+
 export default function Gallery() {
   return (
-    <div className="w-full flex flex-col gap-24 items-center my-36">
+    <div className="w-full flex flex-col gap-24 md:gap-28 items-center my-36">
       <Subtitle
         primary="Galeria de arte"
         secundary="Ofrecida por TechArt"
       />
       <div className="w-full max-w-7xl">
-        <MasonryGallery />
+        <MasonryGallery images={IMAGES} />
       </div>
     </div>
   );
