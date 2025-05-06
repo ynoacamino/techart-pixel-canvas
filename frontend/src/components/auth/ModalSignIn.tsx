@@ -1,8 +1,8 @@
-import * as Dialog from '@radix-ui/react-dialog';
-import { Button } from '@/components/ui/button';
 import Google from '@/components/logos/Google';
-import Link from 'next/link';
+import { Button } from '@/components/ui/button';
 import { BACKEND_URL } from '@/config/variables';
+import * as Dialog from '@radix-ui/react-dialog';
+import Link from 'next/link';
 import { Blocks } from '../ui/blocks';
 
 export default function ModalSignIn({ children }: { children: React.ReactNode }) {
@@ -13,7 +13,7 @@ export default function ModalSignIn({ children }: { children: React.ReactNode })
       </Dialog.Trigger>
       <Dialog.Portal>
         <Dialog.Overlay className="bg-gray-900/40 fixed inset-0 animate-fade-in" />
-        <Dialog.Content className="bg-zinc-300 rounded-xl shadow-lg fixed top-1/2 left-1/2 -traslate-1/2 w-[90vw] max-w-lg max-h-[85vh] p-7 animate-content-show focus:outline-none flex flex-col justify-center items-center">
+        <Dialog.Content className="bg-zinc-100 rounded-xl shadow-lg fixed top-1/2 left-1/2 -traslate-1/2 w-[90vw] max-w-lg max-h-[85vh] p-7 animate-content-show focus:outline-none flex flex-col justify-center items-center">
           <Blocks
             cols={12}
             rows={2}

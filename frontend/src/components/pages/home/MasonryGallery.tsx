@@ -29,7 +29,7 @@ export default function MasonryGallery({
     });
   }, []);
   return (
-    <masonry-layout maxcolwidth="300" gap="8" className="px-2 mt-15 max-w-7xl w-full">
+    <masonry-layout maxcolwidth="300" gap="8" className="mt-15 max-w-7xl w-full">
       {
         images
           ? (images.map((image, index) => (

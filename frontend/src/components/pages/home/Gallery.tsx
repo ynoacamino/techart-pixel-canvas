@@ -1,3 +1,4 @@
+import { Section } from '@/components/ui/section';
 import MasonryGallery from './MasonryGallery';
 import Subtitle from './Subtitle';
 
@@ -22,14 +23,14 @@ const IMAGES = [
 
 export default function Gallery() {
   return (
-    <div className="w-full flex flex-col gap-24 md:gap-28 items-center my-36">
+    <Section>
       <Subtitle
-        primary="Galeria de arte"
+        primary="Galería de arte"
         secundary="Ofrecida por TechArt"
       />
       <div className="w-full max-w-7xl">
         <MasonryGallery images={IMAGES} />
       </div>
-    </div>
+    </Section>
   );
 }

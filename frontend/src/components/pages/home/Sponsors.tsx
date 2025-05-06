@@ -1,3 +1,4 @@
+import { Section } from '@/components/ui/section';
 import Subtitle from './Subtitle';
 
 const SPONSORTS = [
@@ -13,12 +14,12 @@ const SPONSORTS = [
 
 export default function Sponsors() {
   return (
-    <div className="w-full flex flex-col gap-24 md:gap-28 items-center my-36">
+    <Section>
       <Subtitle
         primary="Sponsors"
         secundary="Agradecemos su colaboración"
       />
-      <div className="grid md:grid-cols-2 w-full max-w-7xl gap-y-24">
+      <div className="grid md:grid-cols-2 gap-y-20 w-full max-w-7xl">
         {SPONSORTS.map((sponsor, index) => (
           <img
             key={index}
@@ -28,6 +29,6 @@ export default function Sponsors() {
           />
         ))}
       </div>
-    </div>
+    </Section>
   );
 }

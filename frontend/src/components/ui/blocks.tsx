@@ -1,10 +1,11 @@
 'use client';
 
 import { cn, generateRandomMap } from '@/lib/utils';
+import { VariantProps } from 'class-variance-authority';
 import { useEffect, useState } from 'react';
-import { Block, BlockProps } from './block';
+import { Block, blockVariants } from './block';
 
-interface BlocksProps extends BlockProps {
+interface BlocksProps extends VariantProps<typeof blockVariants> {
   cols: number;
   rows: number;
   ratio?: number;
@@ -27,7 +28,7 @@ function Blocks({
   return (
     <div
       className={cn(
-        'grid gap-0.5',
+        'grid gap-1',
         className,
       )}
       style={{
