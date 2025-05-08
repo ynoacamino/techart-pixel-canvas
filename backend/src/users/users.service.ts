@@ -54,4 +54,22 @@ export class UsersService {
       },
     });
   }
+
+  async discoverSecret(id: number): Promise<User> {
+    return this.prisma.user.update({
+      where: { id },
+      data: {
+        discTheSecret: true,
+      },
+    });
+  }
+
+  async getAllDiscoverSecret(): Promise<User[]> {
+    return this.prisma.user.findMany({
+      where: {
+        discTheSecret: true,
+      },
+    },
+  );
+  }
 }
