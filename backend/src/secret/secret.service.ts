@@ -2,6 +2,7 @@ import { addMinutes } from '@/common/utils/date.utils';
 import { PrismaService } from '@/prisma/prisma.service';
 import { UsersService } from '@/users/users.service';
 import { Injectable } from '@nestjs/common';
+import { Cron, CronExpression } from '@nestjs/schedule';
 
 @Injectable()
 export class SecretService {
@@ -55,6 +56,18 @@ export class SecretService {
 
   async usersWithSecret() {
     return (await this.usersService.getAllDiscoverSecret()).length;
+  }
+
+  @Cron(CronExpression.EVERY_10_MINUTES)
+  async deleteExpiredTokens() {
+    const now = new Date();
+    await this.prisma.secret.deleteMany({
+      where: {
+        expiresAt: {
+          lt: now,
+        },
+      },
+    });
   }
 
 }

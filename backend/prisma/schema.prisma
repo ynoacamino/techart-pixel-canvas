@@ -47,7 +47,7 @@ model AdminEmail {
 model Secret {
   id   Int    @id @default(autoincrement())
   token String @unique
-  userId Int @unique
+  userId Int
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
   expiresAt DateTime

@@ -1,4 +1,4 @@
-import { Controller, Get, Query, Req, Res } from '@nestjs/common';
+import { Controller, Get, Req, Res } from '@nestjs/common';
 import { SecretService } from './secret.service';
 import { Request, Response } from 'express';
 import { SessionsService } from '@/sessions/sessions.service';
@@ -22,11 +22,6 @@ export class SecretController {
       return res.status(401).json({ message: 'Not authenticated' });
     }
 
-    if (user.discTheSecret) {
-      const discoveredBy = await this.secretService.usersWithSecret()
-      return res.status(403).json({ ok: true, discovered: true, discoveredBy, message: 'Already discovered' });
-    }
-
     const token = await this.secretService.createToken(user.id);
 
     res.cookie('secret_token', token, {
@@ -40,33 +35,35 @@ export class SecretController {
   }
 
   @Get('a-random-endpoint-that-users-should-not-access-easily')
-  async access(@Req() req: Request, @Query('token') token: string) {
+  async access(@Req() req: Request, @Res() res: Response) {
     const sessionToken = req.cookies?.session_token;
     const secretToken = req.cookies?.secret_token;
+    let discoveredBy = await this.secretService.usersWithSecret();
+    console.log('sessionToken', sessionToken);
+    console.log('secretToken', secretToken);
     
-    if (!sessionToken || !secretToken || token !== secretToken) {
-      return { ok: false };
+    if (!sessionToken || !secretToken) {
+      console.log('No session token or secret token');
+      return res.json({ ok: false, discoveredBy });
     }
 
     const user = await this.sessionsService.getUserBySessionToken(sessionToken);
 
     if (!user) {
-      return { ok: false };
+      return res.json({ ok: false, discoveredBy });
     }
 
-    const discoveredBy = await this.secretService.usersWithSecret();
-
     if (user.discTheSecret) {
-      return { ok: true, discovered: true, discoveredBy, message: 'Already discovered' };
+      return res.json({ ok: true, discovered: true, discoveredBy, message: 'Already discovered' });
     }
 
     const isValid = await this.secretService.validateToken(user.id, secretToken);
 
     if (!isValid) {
-      return { ok: false };
+      return res.json({ ok: false, discoveredBy });
     }
-
-    return { ok: true, discoveredBy };
+    discoveredBy += 1;
+    return res.json({ ok: true, discoveredBy });
   }
 
 }
