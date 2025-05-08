@@ -25,6 +25,7 @@ model User {
   upcomingCellsAt DateTime
   claimed         Boolean   @default(false)
   sessions        Session[]
+  secret          Secret[]
 }
 
 model Session {
@@ -40,4 +41,14 @@ model Session {
 model AdminEmail {
   id    Int    @id @default(autoincrement())
   email String @unique
+}
+
+model Secret {
+  id   Int    @id @default(autoincrement())
+  token String @unique
+  userId Int @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  expiresAt DateTime
+  isUsed Boolean @default(false)
 }

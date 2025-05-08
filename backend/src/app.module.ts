@@ -8,6 +8,7 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { SessionsService } from './sessions/sessions.service';
 import { SessionsModule } from './sessions/sessions.module';
+import { SecretModule } from './secret/secret.module';
 import configuration from './config/configuration';
 
 @Module({
@@ -21,6 +22,7 @@ import configuration from './config/configuration';
     UsersModule,
     SessionsModule,
     ScheduleModule.forRoot(),
+    SecretModule,
   ],
   controllers: [AppController],
 })
