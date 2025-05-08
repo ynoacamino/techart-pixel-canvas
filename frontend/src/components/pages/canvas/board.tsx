@@ -7,6 +7,7 @@ import { useColorPickerStore } from '@/components/providers/colorPicketProvider'
 import { useEffect, useRef, useState } from 'react';
 import { BOARD_SIZE, CELL_SIZE } from '@/config/board';
 import { useCellStore } from '@/components/providers/cellProvider';
+import useButtonFound from '@/hooks/useButtonFound';
 
 const socket = io(BACKEND_URL, {
   withCredentials: true,
@@ -27,6 +28,7 @@ export default function Board() {
   const [ctrlClicked, setCtrlClicked] = useState(false);
 
   const { board, changeColor } = useBoard(socket);
+  const { handleClick: handleSecret } = useButtonFound();
   const currentColor = useColorPickerStore((state) => state.currentColor);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const cellsAvailable = useCellStore((store) => store.cellsAvailable);
@@ -84,6 +86,10 @@ export default function Board() {
     const y = Math.floor(((e.clientY - rect.top) * scaleY) / CELL_SIZE);
 
     changeColor({ x, y, color: currentColor });
+
+    if (x === BOARD_SIZE - 1 && y === BOARD_SIZE / 2) {
+      handleSecret();
+    }
   };
 
   const handleMouseMove = (e: React.MouseEvent<HTMLCanvasElement>) => {
