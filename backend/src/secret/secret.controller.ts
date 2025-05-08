@@ -21,6 +21,12 @@ export class SecretController {
     if (!user) {
       return res.status(401).json({ message: 'Not authenticated' });
     }
+
+    if (user.discTheSecret) {
+      const discoveredBy = await this.secretService.usersWithSecret()
+      return res.status(403).json({ ok: true, discovered: true, discoveredBy, message: 'Already discovered' });
+    }
+
     const token = await this.secretService.createToken(user.id);
 
     res.cookie('secret_token', token, {
@@ -48,13 +54,19 @@ export class SecretController {
       return { ok: false };
     }
 
+    const discoveredBy = await this.secretService.usersWithSecret();
+
+    if (user.discTheSecret) {
+      return { ok: true, discovered: true, discoveredBy, message: 'Already discovered' };
+    }
+
     const isValid = await this.secretService.validateToken(user.id, secretToken);
 
     if (!isValid) {
       return { ok: false };
     }
 
-    return { ok: true };
+    return { ok: true, discoveredBy };
   }
 
 }

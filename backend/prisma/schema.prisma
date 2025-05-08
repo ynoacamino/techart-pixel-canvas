@@ -26,6 +26,7 @@ model User {
   claimed         Boolean   @default(false)
   sessions        Session[]
   secret          Secret[]
+  discTheSecret   Boolean   @default(false)
 }
 
 model Session {
