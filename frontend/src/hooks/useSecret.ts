@@ -28,6 +28,7 @@ export default function useSecret() {
       }
       setDiscoveredBy(data.discoveredBy);
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error('Error fetching secret:', error);
     }
   };

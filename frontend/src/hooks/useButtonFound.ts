@@ -24,6 +24,7 @@ export default function useButtonFound() {
         setDisabled(false);
       }
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error('Error fetching secret:', error);
     }
   };
