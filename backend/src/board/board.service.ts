@@ -1,12 +1,13 @@
-import { Injectable, OnModuleInit } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import * as path from 'path';
 import * as fs from 'fs/promises';
 import { Cron, CronExpression } from '@nestjs/schedule';
 import { Board } from './dto/cell.dto';
+import configuration from '@/config/configuration';
 
 @Injectable()
 export class BoardService {
-  private readonly size = 100;
+  private readonly size = configuration().BOARD_SIZE;
 
   private board: Board;
 
@@ -45,7 +46,26 @@ export class BoardService {
     const backupPath = path.join(backupDir, latestFile);
 
     const data = await fs.readFile(backupPath, 'utf8');
-    this.board = JSON.parse(data) as Board;
+
+    const savedBoard = JSON.parse(data) as Board;
+
+    if (savedBoard.length < this.size) {
+      const resizeBoard = Array.from({ length: this.size }, () => Array.from({ length: this.size }, () => '#FFFFFF')) as Board;
+
+      resizeBoard.forEach((row, i) => {
+        row.forEach((_, j) => {
+          if (i < savedBoard.length && j < savedBoard.length) {
+            resizeBoard[i][j] = savedBoard[i][j];
+          }
+        })
+      })
+
+      this.board = resizeBoard;
+      return;
+    }
+
+    this.board = savedBoard;
+    return;
   }
 
   getBoard(): Board {

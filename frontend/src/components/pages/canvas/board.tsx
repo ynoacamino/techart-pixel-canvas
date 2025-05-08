@@ -1,3 +1,5 @@
+'use client';
+
 import { BACKEND_URL } from '@/config/variables';
 import { useBoard } from '@/hooks/useBoard';
 import { io } from 'socket.io-client';
