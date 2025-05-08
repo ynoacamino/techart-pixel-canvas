@@ -12,7 +12,7 @@ import { Logger } from '@nestjs/common';
 import { SessionsService } from '@/sessions/sessions.service';
 import { Role, User } from '@prisma/client';
 import { UsersService } from '@/users/users.service';
-import configuration, { CELLS_AVAILABLE, UPCOMING_CELLS_TIME_OUT } from '@/config/configuration';
+import configuration from '@/config/configuration';
 import { UpdateCellDto } from './dto/cell.dto';
 import { BoardService } from './board.service';
 
@@ -79,7 +79,7 @@ export class BoardGateway implements OnGatewayConnection {
     if (user.cellsAvailable > 0) {
       if (user.upcomingCellsAt.getTime() < Date.now()) {
         const cellsAvailable = user.cellsAvailable - 1;
-        const upcomingCellsAt = new Date(Date.now() + UPCOMING_CELLS_TIME_OUT);
+        const upcomingCellsAt = new Date(Date.now() + configuration().UPCOMING_CELLS_TIME_OUT);
 
         await this.userService.updateUser(user.id, {
           cellsAvailable,
@@ -95,16 +95,16 @@ export class BoardGateway implements OnGatewayConnection {
 
         setTimeout(async () => {
           await this.userService.updateUser(user.id, {
-            cellsAvailable: CELLS_AVAILABLE,
+            cellsAvailable: configuration().CELLS_AVAILABLE,
             claimed: true,
           });
 
           client.emit("user_state", {
-            cellsAvailable: CELLS_AVAILABLE,
+            cellsAvailable:  configuration().CELLS_AVAILABLE,
             claimed: true,
             upcomingCellsAt: user.upcomingCellsAt,
           })
-        }, UPCOMING_CELLS_TIME_OUT);
+        },  configuration().UPCOMING_CELLS_TIME_OUT);
       } else {
         const cellsAvailable = user.cellsAvailable - 1;
 
