@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Role, User } from '@prisma/client';
-import { CELLS_AVAILABLE } from '@/config/configuration';
+import configuration from '@/config/configuration';
 import { PrismaService } from '@/prisma/prisma.service';
 
 @Injectable()
@@ -29,7 +29,7 @@ export class UsersService {
         avatar: data.avatar,
         role: isAdmin ? Role.admin : Role.auth,
         email: data.email,
-        cellsAvailable: CELLS_AVAILABLE,
+        cellsAvailable: configuration().CELLS_AVAILABLE,
         upcomingCellsAt: new Date(),
         claimed: true,
       },

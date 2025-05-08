@@ -7,7 +7,7 @@ const SPONSORTS = [
     alt: 'IEEE UNSA Student Branch',
   },
   {
-    src: 'https://ynoa-uploader.ynoacamino.site/uploads/1746135568_Component%201%20%286%29.png',
+    src: 'https://ynoa-uploader.ynoacamino.site/uploads/1746502291_Component%201%20%287%29.png',
     alt: 'Tech Art Arequipa',
   },
 ];
@@ -25,7 +25,7 @@ export default function Sponsors() {
             key={index}
             src={sponsor.src}
             alt={sponsor.alt}
-            className="w-full max-w-sm justify-self-center"
+            className="w-80 md:w-full max-w-sm justify-self-center"
           />
         ))}
       </div>
