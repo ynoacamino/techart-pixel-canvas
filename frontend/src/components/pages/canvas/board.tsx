@@ -8,6 +8,7 @@ import { useEffect, useRef, useState } from 'react';
 import { BOARD_SIZE, CELL_SIZE } from '@/config/board';
 import { useCellStore } from '@/components/providers/cellProvider';
 import useButtonFound from '@/hooks/useButtonFound';
+import { toast } from 'sonner';
 
 const socket = io(BACKEND_URL, {
   withCredentials: true,
@@ -138,6 +139,10 @@ export default function Board() {
       }
     }
   }, [board, hoveredCell]);
+
+  useEffect(() => {
+    toast.info('¿Puedes encontrar el secreto en algún lugar del tablero?');
+  }, []);
 
   return (
     <div className="w-screen md:w-[100vh] aspect-square bg-gray-100 grid grid-cols-1">
