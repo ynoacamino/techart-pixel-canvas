@@ -115,8 +115,7 @@ func createGIF(images []*image.RGBA, outputPath string, delay int) error {
 }
 
 const (
-	CELL_SIZE  = 10
-	IMAGE_SIZE = 100 * CELL_SIZE
+	IMAGE_SIZE int = 1000
 )
 
 func main() {
@@ -125,10 +124,17 @@ func main() {
 
 	path, miliseconds := getPath()
 
-	files, err := readDir(path)
+	allFiles, err := readDir(path)
 	if err != nil {
 		fmt.Println("Error reading files:", err)
 		return
+	}
+
+	var files []os.DirEntry
+	for _, f := range allFiles {
+		if !f.IsDir() && filepath.Ext(f.Name()) == ".json" {
+			files = append(files, f)
+		}
 	}
 
 	stepDuration := time.Since(stepStart)
@@ -150,6 +156,7 @@ func main() {
 				fmt.Println("Error reading file:", err)
 				return
 			}
+			CELL_SIZE := IMAGE_SIZE / len(dataFile)
 
 			for j, row := range dataFile {
 				for i, cell := range row {
