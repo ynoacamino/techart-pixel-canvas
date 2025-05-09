@@ -39,6 +39,18 @@ export default function Timer() {
 
   return (
     <div className="absolute top-3 right-3 md:top-6 md:right-6 text-primary-foreground font-bold gap-4 flex text-lg md:text-2xl">
+      <motion.div
+        className="bg-red-600 rounded-md py-3 px-5 flex flex-col items-center justify-center"
+        layout
+        transition={{
+          type: 'spring',
+          visualDuration: 0.2,
+          bounce: 0.2,
+        }}
+      >
+        <span className="text-sm">Termina:</span>
+        <span>12:00 pm</span>
+      </motion.div>
       <AnimatePresence initial={false}>
         {!claimed ? (
           <motion.div
