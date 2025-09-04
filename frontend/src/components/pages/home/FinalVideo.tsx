@@ -4,7 +4,7 @@ import { Blocks } from '@/components/ui/blocks';
 import { motion } from 'motion/react';
 import { useMediaQuery } from 'react-responsive';
 
-const VIDEO_URL = 'https://ynoa-uploader.ynoacamino.site/uploads/1749780865_timelapse.mp4';
+const VIDEO_URL = 'https://ynoa-uploader.ynoacamino.me/uploads/1749780865_timelapse.mp4';
 
 export default function FinalVideo() {
   const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
