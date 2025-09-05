@@ -17,7 +17,7 @@ const metadataConfig: Metadata = {
     description: 'Página web para promocion de concurso de arte en colaboracion entre IEEE Student Branch UNSA y Asociacion Integrativa HDC',
     images: [
       {
-        url: 'https://ynoa-uploader.ynoacamino.site/uploads/1746503422_2025-05-05_22-49.webp',
+        url: 'https://ynoa-uploader.ynoacamino.me/uploads/1746503422_2025-05-05_22-49.webp',
         width: 631,
         height: 494,
         alt: 'TechArt | Pixel art',
@@ -31,7 +31,7 @@ const metadataConfig: Metadata = {
     description: 'Página web para promocion de concurso de arte en colaboracion entre IEEE Student Branch UNSA y Asociacion Integrativa HDC',
     images: [
       {
-        url: 'https://ynoa-uploader.ynoacamino.site/uploads/1746503422_2025-05-05_22-49.webp',
+        url: 'https://ynoa-uploader.ynoacamino.me/uploads/1746503422_2025-05-05_22-49.webp',
         width: 631,
         height: 494,
         alt: 'TechArt | Pixel art',

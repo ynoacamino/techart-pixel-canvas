@@ -3,11 +3,11 @@ import Subtitle from './Subtitle';
 
 const SPONSORTS = [
   {
-    src: 'https://ynoa-uploader.ynoacamino.site/uploads/1746135541_LogoNegro-SBIEEEUNSA.png',
+    src: 'https://ynoa-uploader.ynoacamino.me/uploads/1746135541_LogoNegro-SBIEEEUNSA.png',
     alt: 'IEEE UNSA Student Branch',
   },
   {
-    src: 'https://ynoa-uploader.ynoacamino.site/uploads/1746502291_Component%201%20%287%29.png',
+    src: 'https://ynoa-uploader.ynoacamino.me/uploads/1746502291_Component%201%20%287%29.png',
     alt: 'Tech Art Arequipa',
   },
 ];
