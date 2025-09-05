@@ -1,10 +1,7 @@
 'use client';
 
-import ModalSignIn from '@/components/auth/ModalSignIn';
 import { useAuth } from '@/components/contexts/AuthProvider';
 import { Blocks } from '@/components/ui/blocks';
-import { Button } from '@/components/ui/button';
-import Link from 'next/link';
 import { useMediaQuery } from 'react-responsive';
 
 export default function Hero() {
