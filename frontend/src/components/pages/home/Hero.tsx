@@ -15,24 +15,6 @@ export default function Hero() {
       <h1 className="text-5xl lg:text-6xl font-bold text-center uppercase">
         Tech Art
       </h1>
-      {
-        user && (
-          <Button size="lg" className="text-xl animate-bounce" disabled={isLoading} asChild>
-            <Link href="/board">
-              ¡Pintemos!
-            </Link>
-          </Button>
-        )
-      }
-      {
-        !user && (
-          <ModalSignIn>
-            <Button size="lg" className="text-xl animate-bounce" disabled={isLoading}>
-              ¡Pintemos!
-            </Button>
-          </ModalSignIn>
-        )
-      }
       <div className="flex gap-0.5 absolute bottom-1/2 translate-y-48">
         <Blocks cols={isMobile ? 4 : 5} rows={2} ratio={1.5} color="blue" />
         <Blocks cols={isMobile ? 4 : 5} rows={2} ratio={1.5} color="green" />
